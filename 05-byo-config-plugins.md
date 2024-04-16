@@ -267,7 +267,7 @@ Open your **ios** folder in Xcode, go to File -> New -> Target..., and follow th
 - **Info.plist**
 (our config plugin will later copy these files into the native project during prebuild)
 
-### Exercise 4. Create the config plugin
+## Exercise 4. Create the config plugin
 > Check out the recommendations for [comparing your plugin output to the intended native output](/companions/05/diffing-techniques.md). Use these techniques or something similar to check your progress as you create your plugin.
 
 In the instructions below, we're going to focus on the raw code you'll be editing. It's up to you to decide when to pause and check your work using the techniques linked above or something else.
@@ -277,6 +277,14 @@ In the instructions below, we're going to focus on the raw code you'll be editin
 
 ### iOS
 [Follow the instructions here for creating an iOS plugin](/companions/05/io-plugin.md).
+
+## Exercise 5: Clean up
+1. Put `ios/*` and `android/*` back in your **.gitignore**.
+2. Delete your native project folders.
+3. Commit.
+
+### Bonus
+Have your config plugin accept a parameter or two. Add the `androidWidget` and `iosWidget` parameters to `withWidget`, pass the relative folders (e.g., `widgets/android` or `widgets/ios`) from **app.config.ts**, and use those to create your path constants instead of hardcoding them.
 
 ## See the solution
 Switch to branch: `05-byo-config-plugins-solution`

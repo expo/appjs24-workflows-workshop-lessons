@@ -271,3 +271,5 @@ if (contents.trim().length) {
 // each plugin returns its configuration in case it changes, for the sake of the next plugin in the chain
 return config;
 ```
+
+**Try it.** Run `npx expo prebuild --clean --platform ios`. Does it apply the configuration correctly? Can you run it and see the widget with `npx expo run:ios`?
