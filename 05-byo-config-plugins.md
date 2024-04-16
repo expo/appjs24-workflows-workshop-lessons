@@ -112,8 +112,159 @@ Once you've chosen your platform, proceed to the next exercises, ignoring the st
 3. Commit the projects to your branch.
 
 ### Android
+#### (Not) creating a widget in Android Studio
+**DON'T ACTUALLY DO THIS** This is only for demonstration purposes. If you were to use Android Studio for creating your widget, you would go here:
+<img src="./assets/05/android-studio-widget-create.png" alt="android studio widget creation" width="400"/>
+
+This wizard drops a million XML resource files on your disk. It's gross, and we don't want to replicate all of that. I think if you were really making a widget in Android native tools, you would use Jetpack Compose over XML layouts to avoid all of this (you'll find out in Module 06 that we'll use neither of these). What you need to know in terms of creating a config plugin is how to copy files, modify **AndroidManifest.xml**, and do a little **res** file tweaking. So, we will follow a simplified process focusing on these files.
+
+The below instructions are inspired from the Android Studio wizard, but also from:
+- [Android Documentation - creating a simple widget](https://developer.android.com/develop/ui/views/appwidgets)
+- [Creating an Android Widget with Jetpack Compose / Glance](https://developer.android.com/develop/ui/compose/glance/create-app-widget)
+
+#### Creating a Hello World Widget
+1. In **android/app/src/main/res/xml** (create this folder if it doesn't exist), add **hello_app_widget_info.xml**:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+  android:description="@string/app_widget_description"
+  android:initialKeyguardLayout="@layout/hello_app_widget"
+  android:initialLayout="@layout/hello_app_widget"
+  android:minWidth="40dp"
+  android:minHeight="40dp"
+  android:previewLayout="@layout/hello_app_widget"
+  android:resizeMode="horizontal|vertical"
+  android:targetCellWidth="2"
+  android:targetCellHeight="1"
+  android:updatePeriodMillis="86400000"
+  android:widgetCategory="home_screen" />
+```
+(this defines the widget)
+
+2. In **android/app/src/main/res/layout** (create the folder if it doesn't exist), add **hello_app_widget.xml**:
+```xml
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/cardview_light_background"
+>
+  <TextView
+    android:id="@+id/appwidget_text"
+    android:textColor="@color/cardview_dark_background"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:layout_margin="8dp"
+    android:contentDescription="It's a widget I guess"
+    android:text="original text"
+    android:textSize="24sp"
+    android:textStyle="bold|italic" />
+</RelativeLayout>
+```
+(this defines how the widget looks)
+
+3. In **android/app/src/main/res/values**, add the following to **strings.xml**:
+```xml
+<string name="app_widget_description">Hello, app widget!</string>
+```
+(a typical widget would involve a lot of resources, we're just adding one to demonstrate the config plugin mod for editing resources)
+
+4. In **android/app/src/main/java** add **HelloAppWidget.kt**:
+```kotlin
+package com.expo.appjs24workflowsworkshoplessons
+
+import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetProvider
+import android.content.Context
+import android.widget.RemoteViews
+
+class HelloAppWidget : AppWidgetProvider() {
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
+        // There may be multiple widgets active, so update all of them
+        for (appWidgetId in appWidgetIds) {
+            updateAppWidget(context, appWidgetManager, appWidgetId)
+        }
+    }
+
+    override fun onEnabled(context: Context) {
+        // Enter relevant functionality for when the first widget is created
+    }
+
+    override fun onDisabled(context: Context) {
+        // Enter relevant functionality for when the last widget is disabled
+    }
+}
+
+internal fun updateAppWidget(
+    context: Context,
+    appWidgetManager: AppWidgetManager,
+    appWidgetId: Int
+) {
+    val widgetText = "Some updated widget text"
+    // Construct the RemoteViews object
+    val views = RemoteViews(context.packageName, R.layout.hello_app_widget)
+    views.setTextViewText(R.id.appwidget_text, widgetText)
+
+    // Instruct the widget manager to update the widget
+    appWidgetManager.updateAppWidget(appWidgetId, views)
+}
+```
+(this binds app data to our widget)
+**IMPORTANT**: Adjust that package name at the top if that changed in the course of building this app (compare with **MainApplication.kt**, these should match).
+
+5. In **android/app/src/main**, add the following to **AndroidManifest.xml** inside `<application />`:
+```xml
+<receiver
+    android:name=".HelloAppWidget"
+    android:exported="false">
+    <intent-filter>
+      <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+    </intent-filter>
+
+    <meta-data
+      android:name="android.appwidget.provider"
+      android:resource="@xml/hello_app_widget_info" />
+</receiver>
+```
+(this binds the widget definition, data provider, and standard widget actions)
+
+**Try it.** Run `npx expo run:android` and try to add your widget.
+
+#### Getting ready to make a config plugin
+1. Commit this code. You'll use this in the next step to compare with the results of your config plugin.
+2. Create a folder called **plugins/android**, and copy the following files there:
+- **hello_app_widget_info.xml**
+- **hello_app_widget.xml**
+- **HelloAppWidget.kt**
+(our config plugin will later copy these files into the native project during prebuild)
 
 ### iOS
+#### Creating the widget in Xcode
+Open your **ios** folder in Xcode, go to File -> New -> Target..., and follow the wizard as shown below:
+<img src="./assets/05/xcode-widget-create-1.png" alt="xcode widget creation" width="400"/>
+
+<img src="./assets/05/xcode-widget-create-2.png" alt="xcode widget creation" width="400"/>
+
+<img src="./assets/05/xcode-widget-create-3.png" alt="xcode widget creation" width="400"/>
+(name "HelloWidget", don't select live activity or configuration intent)
+
+<img src="./assets/05/xcode-widget-create-4.png" alt="xcode widget creation" width="400"/>
+(Press "Activate")
+
+**Try it.** Run `npx expo run:ios` on your simulator and try to add your widget. Annoyingly, on your simulator, the widget will not appear in the list until you enter a search (search "widget" and you'll see it).
+
+#### Getting ready to make a config plugin
+1. Commit this code. You'll use this in the next step to compare with the results of your config plugin.
+2. Create a folder called **plugins/ios**, and copy the following files there (all in **ios/HelloWidget**):
+- **HelloWidget.swift**
+- **HelloWidgetBundle.swift**
+- **Assets.xcassets** (copy the whole folder over)
+(our config plugin will later copy these files into the native project during prebuild)
 
 ### Exercise 4. Create the config plugin
 > Check out the recommendations for [comparing your plugin output to the intended native output](/companions/05/diffing-techniques.md). Use these techniques or something similar to check your progress as you create your plugin.
