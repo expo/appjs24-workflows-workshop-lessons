@@ -264,10 +264,13 @@ Open your **ios** folder in Xcode, go to File -> New -> Target..., and follow th
 - **HelloWidget.swift**
 - **HelloWidgetBundle.swift**
 - **Assets.xcassets** (copy the whole folder over)
+- **Info.plist**
 (our config plugin will later copy these files into the native project during prebuild)
 
 ### Exercise 4. Create the config plugin
 > Check out the recommendations for [comparing your plugin output to the intended native output](/companions/05/diffing-techniques.md). Use these techniques or something similar to check your progress as you create your plugin.
+
+In the instructions below, we're going to focus on the raw code you'll be editing. It's up to you to decide when to pause and check your work using the techniques linked above or something else.
 
 ### Android
 [Follow the instructions here for creating an Android plugin](/companions/05/android-plugin.md).
