@@ -253,11 +253,11 @@ Open your **ios** folder in Xcode, go to File -> New -> Target..., and follow th
 
 <img src="./assets/05/xcode-widget-create-3.png" alt="xcode widget creation" width="400"/>
 (name "HelloWidget", don't select live activity or configuration intent)
-<br />
+<br>
 
 <img src="./assets/05/xcode-widget-create-4.png" alt="xcode widget creation" width="400"/>
 (Press "Activate")
-<br />
+<br>
 
 **Try it.** Run `npx expo run:ios` on your simulator and try to add your widget. Annoyingly, on your simulator, the widget will not appear in the list until you enter a search (search "widget" and you'll see it).
 
