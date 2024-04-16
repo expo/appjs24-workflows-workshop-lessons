@@ -64,7 +64,7 @@ import { useQuickActionRouting, RouterAction } from "expo-quick-actions/router";
 2. In **app.config.js**, add `expo-quick-action`'s associated config plugin. Update the paths as needed:
 
 ```json
-plugins: [
+"plugins": [
   [
      "expo-quick-actions",
      {

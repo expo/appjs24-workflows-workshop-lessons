@@ -23,7 +23,7 @@ Let’s learn how config plugins modify native projects and let us tap into spec
 
 1. Create a new top-level folder called **plugins**.
 
-2. Add `withAndroidWidget.ts`:
+2. Add **withAndroidWidget.ts**:
 ```ts
 import {
   ConfigPlugin,
@@ -39,7 +39,7 @@ const withAndroidWidget: ConfigPlugin = (config) => {
 export default withAndroidWidget;
 ```
 
-3. Add `withIosWidget.ts`:
+3. Add **withIosWidget.ts**:
 ```ts
 import {
   ConfigPlugin,
@@ -114,6 +114,7 @@ Once you've chosen your platform, proceed to the next exercises, ignoring the st
 ### Android
 #### (Not) creating a widget in Android Studio
 **DON'T ACTUALLY DO THIS** This is only for demonstration purposes. If you were to use Android Studio for creating your widget, you would go here:
+
 <img src="./assets/05/android-studio-widget-create.png" alt="android studio widget creation" width="400"/>
 
 This wizard drops a million XML resource files on your disk. It's gross, and we don't want to replicate all of that. I think if you were really making a widget in Android native tools, you would use Jetpack Compose over XML layouts to avoid all of this (you'll find out in Module 06 that we'll use neither of these). What you need to know in terms of creating a config plugin is how to copy files, modify **AndroidManifest.xml**, and do a little **res** file tweaking. So, we will follow a simplified process focusing on these files.
@@ -252,9 +253,11 @@ Open your **ios** folder in Xcode, go to File -> New -> Target..., and follow th
 
 <img src="./assets/05/xcode-widget-create-3.png" alt="xcode widget creation" width="400"/>
 (name "HelloWidget", don't select live activity or configuration intent)
+<br />
 
 <img src="./assets/05/xcode-widget-create-4.png" alt="xcode widget creation" width="400"/>
 (Press "Activate")
+<br />
 
 **Try it.** Run `npx expo run:ios` on your simulator and try to add your widget. Annoyingly, on your simulator, the widget will not appear in the list until you enter a search (search "widget" and you'll see it).
 
