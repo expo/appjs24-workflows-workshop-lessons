@@ -77,7 +77,7 @@ import path from 'path';
 Add a function to set our lone string resource. We'll use the `withStringsXml` default mod to help with this. You can set your changes on `modResults` and it'll automatically write the changes to the **strings.xml** file at the end of the plugin execution:
 
 ```ts
-function withWidgetDescription(config: ExpoConfig, widgetName) {
+function withWidgetDescription(config: ExpoConfig, widgetName: string) {
   return withStringsXml(config, (stringsXml) => {
     stringsXml.modResults = AndroidConfig.Strings.setStringItem(
       [
@@ -98,7 +98,7 @@ function withWidgetDescription(config: ExpoConfig, widgetName) {
 
 Add this to the mod chain in `withAndroidWidget`:
 ```ts
-config = withWidgetDescription(config);
+config = withWidgetDescription(config, widgetName);
 ```
 
 ## Modify Android Manifest
@@ -145,6 +145,11 @@ function withAndroidManifestReceiver(
     } as any);
   }
 }
+```
+
+Add this to the mod chain in `withAndroidWidget`:
+```ts
+config = withAndroidManifestReceiver(config, widgetName);
 ```
 
 **Try it.** Run `npx expo prebuild --clean --platform android`. Does it apply the configuration correctly? Can you run it and see the widget with `npx expo run:android`?
