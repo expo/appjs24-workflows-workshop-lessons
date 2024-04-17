@@ -62,13 +62,18 @@ export default withIosWidget;
 
 2. Add a file called **withWidget.ts** that combines the two:
 ```ts
-import { ExpoConfig } from "expo/config";
+import {
+  ConfigPlugin,
+} from "@expo/config-plugins";
 import withAndroidWidget from "./withAndroidWidget";
+import withIosWidget from './withIosWidget';
 
 const withWidget: ConfigPlugin = (config) => {
   config = withAndroidWidget(config);
   return withIosWidget(config);
 }
+
+export default withWidget;
 ```
 
 ### Call the config plugin from your Expo config
