@@ -143,6 +143,7 @@ function withAndroidManifestReceiver(
         },
       },
     } as any);
+    return androidManifestConfig;
   });
 }
 ```
