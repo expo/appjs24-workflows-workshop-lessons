@@ -15,7 +15,7 @@ const widgetPath = "widgets/android";
 
 Also, add a function somewhere in the file to let us use the one widget name to derive other file names:
 ```ts
-const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+const camelToSnakeCase = (str: string) => str.replace(/([a-zA-Z])(?=[A-Z])/g,'$1_').toLowerCase();
 ```
 
 ## Copy widget files
@@ -77,13 +77,13 @@ import path from 'path';
 Add a function to set our lone string resource. We'll use the `withStringsXml` default mod to help with this. You can set your changes on `modResults` and it'll automatically write the changes to the **strings.xml** file at the end of the plugin execution:
 
 ```ts
-function withWidgetDescription(config: ExpoConfig, widgetName: string) {
+function withWidgetDescription(config: ExpoConfig) {
   return withStringsXml(config, (stringsXml) => {
     stringsXml.modResults = AndroidConfig.Strings.setStringItem(
       [
         {
           $: {
-            name: `${camelToSnakeCase(widgetName)}_description`,
+            name: `app_widget_description`,
             translatable: 'false',
           },
           _: 'a widget that says hello',
@@ -98,7 +98,7 @@ function withWidgetDescription(config: ExpoConfig, widgetName: string) {
 
 Add this to the mod chain in `withAndroidWidget`:
 ```ts
-config = withWidgetDescription(config, widgetName);
+config = withWidgetDescription(config);
 ```
 
 ## Modify Android Manifest
