@@ -26,12 +26,12 @@ So, let's put those in **withIosWidget.ts**, right inside the `withDangerousMod`
 ```ts
 // constants
 const widgetFolderName = "HelloWidget";
-const widgetBundleId = config.ios!.bundleIdentifier! + "." + "HelloWidget";
+const widgetBundleId = dangerousConfig.ios!.bundleIdentifier! + "." + "HelloWidget";
 const widgetExtensionFrameworks = ["WidgetKit", "SwiftUI"];
 const developmentTeamId = undefined;
 
 // absolute directories we need when reading files from disk
-const projectRoot = config.modRequest.projectRoot;
+const projectRoot = dangerousConfig.modRequest.projectRoot;
 const widgetRoot = path.join(
   projectRoot,
   "widgets/ios/"
