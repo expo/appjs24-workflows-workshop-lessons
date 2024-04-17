@@ -139,11 +139,11 @@ function withAndroidManifestReceiver(
       "meta-data": {
         $: {
           "android:name": "android.appwidget.provider",
-          "android:resource": `@xml/${camelCaseToSnakeCase(widgetName)}_info`,
+          "android:resource": `@xml/${camelToSnakeCase(widgetName)}_info`,
         },
       },
     } as any);
-  }
+  });
 }
 ```
 
