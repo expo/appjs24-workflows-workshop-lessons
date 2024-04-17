@@ -60,7 +60,7 @@ import {
   PBXCopyFilesBuildPhase,
 } from "@bacons/xcode";
 import * as xcodeParse from "@bacons/xcode/json";
-import { addFrameworksToDisplayFolder, createConfigurationList, getOrCreateBuildFile, getFramework } from "./apple-utils";
+import { addFrameworksToDisplayFolder, createConfigurationList, getOrCreateBuildFile, getFramework, applyDevelopmentTeamIdToTargets } from "./apple-utils";
 ```
 
 ## Read iOS project and input files, bind them to Xcode project files
@@ -259,7 +259,7 @@ All that just worked on **project.pbxproj** in memory. Let's write it to disk:
 ```ts
 const contents = xcodeParse.build(project.toJSON());
 if (contents.trim().length) {
-  await fs.promises.writeFile(
+  fs.writeFileSync(
     IOSConfig.Paths.getPBXProjectPath(projectRoot),
     contents
   );
