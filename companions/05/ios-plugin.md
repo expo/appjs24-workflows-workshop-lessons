@@ -60,6 +60,7 @@ import {
   PBXCopyFilesBuildPhase,
 } from "@bacons/xcode";
 import * as xcodeParse from "@bacons/xcode/json";
+import { addFrameworksToDisplayFolder, createConfigurationList, getOrCreateBuildFile, getFramework } from "./apple-utils";
 ```
 
 ## Read iOS project and input files, bind them to Xcode project files
@@ -174,11 +175,6 @@ project.rootObject.ensureProductGroup().props.children.push(
   // @ts-expect-error
   appexBuildFile.props.fileRef
 );
-```
-
-Add the references to our utilities library now, as well:
-```ts
-import { addFrameworksToDisplayFolder, createConfigurationList, getOrCreateBuildFile, getFramework } from "./apple-utils"
 ```
 
 **Is this getting messy?** You can refactor these into smaller chunks whenever you'd like!
