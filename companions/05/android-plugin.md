@@ -1,4 +1,4 @@
-# Creating the iOS config plugin
+# Creating the Android config plugin
 ## Background
 This plugin's job is to copy the widget-specific files over to the Android project folder, and modify the files (especially **AndroidManifest.xml**) that incorporate the widget into the rest of the app.
 
