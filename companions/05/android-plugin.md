@@ -7,7 +7,7 @@ There's a few things that will be referred to a lot within the config plugin. Th
 - project root (e.g., the top-level folder)
 - native project root (**android**)
 
-So, let's put those in **withAndroidWidget.ts**, right at the top of the function:
+So, let's put those in **withAndroidWidget.ts**. Remove the reference to `withDangerousMod`, and add the following right at the top of the function:
 ```ts
 const widgetName = "HelloAppWidget";
 const widgetPath = "widgets/android";
