@@ -55,7 +55,7 @@ return withDangerousMod(config, [
 
 Add this to `withAndroidWidget`, prior to returning the config:
 ```ts
-config = withWidgetFiles(config);
+config = withWidgetFiles(config, widgetName, widgetPath);
 ```
 
 You'll probably have some missing references, so let's update them with everything we need:
