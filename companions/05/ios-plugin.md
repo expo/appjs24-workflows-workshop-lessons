@@ -41,8 +41,9 @@ const widgetRoot = path.join(
 const widgetFolderRelativeToIosProject = "../widgets/ios/"
 ```
 
-This is a good time to add some utility package references you'll need at the top of the file, as well as everything we'll need from `@bacons/xcode`:
+This is a good time to add some utility package references you'll need at the top of the file, as well as everything we'll need from `@bacons/xcode`. Here's your new imports:
 ```ts
+import { ConfigPlugin, withDangerousMod, IOSConfig } from "@expo/config-plugins";
 import path from "path";
 import fs from "fs";
 import { globSync } from "glob";
@@ -70,7 +71,7 @@ Add this code:
 // open the Xcode project file
 // Now we can start creating objects inside of it
 const project = XcodeProject.open(
-  IOSConfig.Paths.getPBXProjectPath(config.modRequest.projectRoot)
+  IOSConfig.Paths.getPBXProjectPath(dangerousConfig.modRequest.projectRoot)
 );
 
 // one more constant that depends on the project config - we'll need this later.
