@@ -15,7 +15,7 @@ const widgetPath = "widgets/android";
 
 Also, add a function somewhere in the file to let us use the one widget name to derive other file names:
 ```ts
-const camelToSnakeCase = str => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
 ```
 
 ## Copy widget files
