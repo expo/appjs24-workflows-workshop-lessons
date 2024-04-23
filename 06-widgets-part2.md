@@ -240,11 +240,130 @@ await updateWidget();
 
 ## Exercises - iOS
 
-### Exercise 1.  Add an app group for sharing data
+### Exercise 2(i).  Add an app group for sharing data
+Because your main app and its widget extension are technically separate apps with their own bundle ID's, they can't just automatically share data. Instead, they need to be part of an "app group", a sort of shared bundle ID that lets apps share data with each other. A common convention is to prefix your main app's bundle ID with `group.`.
 
-### Exercise 2. Save a file to the shared location
+1. Add the needed entitlement for your main app in **app.config.ts**:
+```json
+"entitlements": {
+  "com.apple.security.application-groups": ["group.com.expo.appjs-workflows-code"]
+}
+```
 
-### Exercise 3. Read the file from the widget
+2. Your app config generates the native entitlements file during prebuild, but the extension will need its own entitlements file plist. Create **widget.entitlements** in **widgets/ios**:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+  <plist version="1.0">
+  <dict>
+    <key>com.apple.security.application-groups</key>
+    <array>
+      <string>group.com.expo.appjs-workflows-code</string>
+    </array>
+  </dict>
+</plist>
+```
+
+3. Of course, just adding that file will not be enough. We now need to tell your iOS config plugin code to add the file to the **project.pbxproj** file. Add the following to **withIosWidget.ts**, prior to associating the widget target with the main app target.
+
+```ts
+// TODO
+```
+
+### Exercise 3(i). Save a file to the shared location
+1. Update our little file read/write library in **widget-share.tsx** to use the path for the app group for iOS:
+```jsx
+// add import
+import { Platform } from "react-native";
+
+// update this function
+async function getLatestShareFilePath() {
+  if (Platform.OS === "ios") {
+    return await RNFS.pathForGroup('group.com.keith-kurak.expo-widget-demo');
+  }
+  return `${RNFS.DocumentDirectoryPath}/latest_share.jpg`;
+}
+```
+2. Make sure to update your other uses of `getLatestShareFilePath` so `await` is now in front of them.
+
+### Exercise 4(i). Read the file from the widget
+TODO: update with image code, I only did this with text before
+
+Now that we're saving the file to the group path, let's read the same file from the widget. Let's make some updates to **HelloWidget.swift**.
+
+1. Update `SimpleEntry` in **HelloWidget.swift**  to include image data:
+```swift
+struct SimpleEntry: TimelineEntry {
+    let date: Date
+    let text: String
+}
+```
+
+2. Update the `HelloWidgetEntryView` to display the image:
+```swift
+struct HelloWidgetEntryView : View {
+  var entry: Provider.Entry
+
+  var body: some View {
+      Text(!entry.text.isEmpty ? "Hello: \(entry.text)" : "Nothing yet!")
+  }
+}
+```
+
+2. Add this to `getTimeline()`:
+```swift
+guard let groupDir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.expo.appjs-workflows-code") else {
+  fatalError("could not get shared app group directory.")
+}
+
+let fileUrl = groupDir.appendingPathComponent("latest_share.jpg")
+  do {
+      let text = try String(contentsOf: fileUrl, encoding: .utf8)
+      let entry = SimpleEntry(date: Date(), text: text)
+      // Some other stuff to make the widget update...
+      let timeline = Timeline(entries: [entry], policy: .atEnd)
+      completion(timeline)
+  } catch {
+      let entry = SimpleEntry(date: Date(), text: "")
+      let timeline = Timeline(entries: [entry], policy: .atEnd)
+      completion(timeline)
+  }
+```
+**Try it.** The updates may not show up right away in your widget (see directly below), but hopefully all this code runs!
+
+### Exercise 5(i). The smallest Expo Module ever: refresh the widget on-demand
+Everything here should technically work and would update your widget... at some point. We really want the image in the widget to change immediately when an image is shared.
+
+```jsx
+ReactNativeWidgetExtension.reloadWidget();
+
+```
 
 ## See the solution
 Switch to branch: `05-widgets-part2-solution`
+
+## Notes about building signed versions for iOS
+We're using simulators and ignoring Apple teams and provisioning profiles fow now to keep things simple, focusing on the feature itself. However, for an actual production version (or even an ad-hoc testing version), you'll need real Apple signing stuff for both your main app and the app extension.
+
+You'll notice we skipped on setting the "development team" in the iOS plugin code. If you set that, it'll assign the correct development team for the extension.
+
+EAS Build will automatically apply your credentials for your main app, but doesn't automatically know to do that for your app extension. However, there is a secret property that can help with this. Set this in the `extra` in your app config:
+```json
+"eas": {
+  "build": {
+    "experimental": {
+      "ios": {
+        "appExtensions": [
+          {
+            "bundleIdentifier": "com.expo.appjs24-workflows-workshop",
+            "targetName": "HelloWidget",
+            "entitlements": {
+              "com.apple.security.application-groups": ["group.com.expo.com.expo.appjs24-workflows-workshop"]
+            }
+          }
+        ]
+      }
+    }
+  }
+}
+```

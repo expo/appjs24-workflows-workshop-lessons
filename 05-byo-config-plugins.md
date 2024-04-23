@@ -183,7 +183,7 @@ The below instructions are inspired from the Android Studio wizard, but also fro
 
 4. In **android/app/src/main/java** add **HelloAppWidget.kt**:
 ```kotlin
-package com.expo.appjs24workflowsworkshoplessons
+package com.expo.appjs24workflowsworkshopcode
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
