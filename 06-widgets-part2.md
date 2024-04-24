@@ -12,9 +12,9 @@ Let’s expand on our widget to make something more realistic that actually shar
 ### Tasks
 - Write data from your app to a file so the widget can read it
 - Pick one platform to start (if you get done early, you can do the second one), and
-    - Extend the config plugin as needed to support the added features
-    - Style your widget
-    - Read data into the widget
+  - Extend the config plugin as needed to support the added features
+  - Style your widget
+  - Read data into the widget
 
 ### Resources
 - Link to any helpful docs
@@ -266,8 +266,21 @@ Because your main app and its widget extension are technically separate apps wit
 
 3. Of course, just adding that file will not be enough. We now need to tell your iOS config plugin code to add the file to the **project.pbxproj** file. Add the following to **withIosWidget.ts**, prior to associating the widget target with the main app target.
 
+Where you call `PBXProject.group()`, add a reference to the entitlements file:
 ```ts
-// TODO
+// @ts-expect-error
+PBXFileReference.create(project, {
+  path: "widget.entitlements",
+  sourceTree: "<group>",
+}),
+```
+
+Where you setup the `widgetTarget`, add a statement to associate the entitlements file with the build config:
+```ts
+ widgetTarget.setBuildSetting(
+  "CODE_SIGN_ENTITLEMENTS",
+  path.join(widgetFolderRelativeToIosProject, "widget.entitlements")
+);
 ```
 
 ### Exercise 3(i). Save a file to the shared location
@@ -279,7 +292,7 @@ import { Platform } from "react-native";
 // update this function
 async function getLatestShareFilePath() {
   if (Platform.OS === "ios") {
-    return await RNFS.pathForGroup('group.com.keith-kurak.expo-widget-demo');
+    return await RNFS.pathForGroup('group.com.expo.appjs-workflows-code');
   }
   return `${RNFS.DocumentDirectoryPath}/latest_share.jpg`;
 }
@@ -295,20 +308,11 @@ Now that we're saving the file to the group path, let's read the same file from 
 ```swift
 struct SimpleEntry: TimelineEntry {
     let date: Date
-    let text: String
+    let imageData: Data?
 }
 ```
 
-2. Update the `HelloWidgetEntryView` to display the image:
-```swift
-struct HelloWidgetEntryView : View {
-  var entry: Provider.Entry
-
-  var body: some View {
-      Text(!entry.text.isEmpty ? "Hello: \(entry.text)" : "Nothing yet!")
-  }
-}
-```
+2. Update the **HelloWidget.swift** to display the image. You can copy over the [new HelloWidget.swift](/companions/06/HelloWidget.swift).
 
 2. Add this to `getTimeline()`:
 ```swift
@@ -318,13 +322,13 @@ guard let groupDir = FileManager.default.containerURL(forSecurityApplicationGrou
 
 let fileUrl = groupDir.appendingPathComponent("latest_share.jpg")
   do {
-      let text = try String(contentsOf: fileUrl, encoding: .utf8)
-      let entry = SimpleEntry(date: Date(), text: text)
+      let imageData = try Data(contentsOf: fileUrl)
+      let entry = SimpleEntry(date: Date(), imageData: imageData)
       // Some other stuff to make the widget update...
       let timeline = Timeline(entries: [entry], policy: .atEnd)
       completion(timeline)
   } catch {
-      let entry = SimpleEntry(date: Date(), text: "")
+      let entry = SimpleEntry(date: Date(), imageData: nil)
       let timeline = Timeline(entries: [entry], policy: .atEnd)
       completion(timeline)
   }
@@ -332,12 +336,60 @@ let fileUrl = groupDir.appendingPathComponent("latest_share.jpg")
 **Try it.** The updates may not show up right away in your widget (see directly below), but hopefully all this code runs!
 
 ### Exercise 5(i). The smallest Expo Module ever: refresh the widget on-demand
-Everything here should technically work and would update your widget... at some point. We really want the image in the widget to change immediately when an image is shared.
+Everything here should technically work and would update your widget... at some point. We really want the image in the widget to change immediately when an image is shared. We're going to create a very small Expo Module to let us access this native command.
 
-```jsx
-ReactNativeWidgetExtension.reloadWidget();
-
+1. Create the local Expo Module by running:
+```bash
+npx create-expo-module@latest --local
 ```
+
+2. This is an iOS-only module, so let's a delete a bunch of files we don't need. When you're done, these should be the **only** files:
+- **index.ts**
+- **expo-module.config.json**
+- **ios**:
+  - **IosWidgetRefreshModule.swift**
+  - **IosWidgetRefresh.podspec**
+
+3. For iOS, the function signature can be automatically inferred from native code, so we're going update **index.ts** to do just that:
+```ts
+import { requireOptionalNativeModule } from "expo-modules-core";
+
+export default requireOptionalNativeModule("IosWidgetRefresh");
+```
+
+4. Update **IosWidgetRefreshModule.swift**:
+```swift
+import ExpoModulesCore
+import WidgetKit
+
+public class IosWidgetRefreshModule: Module {
+  public func definition() -> ModuleDefinition {
+    Name("IosWidgetRefresh")
+
+    Constants([:])
+
+    Function("reloadWidget") { () in
+      if #available(iOS 14.0, *) {
+          WidgetCenter.shared.reloadAllTimelines()
+      }
+    }
+  }
+}
+```
+
+5. Remove the `android` entry from **expo-module.config.json**.
+
+6. In **widget-share.ts**, let's add (or update if it's already there) the `updateWidget()` function:
+```tsx
+import IosWidgetRefresh from "@/modules/ios-widget-refresh";
+import { Platform } from "react-native";
+// ...
+async function updateWidget() {
+  // leave android code alone
+  if (Platform.OS === 'ios') {
+    IosWidgetRefresh.reloadWidget();
+  }
+}
 
 ## See the solution
 Switch to branch: `05-widgets-part2-solution`
