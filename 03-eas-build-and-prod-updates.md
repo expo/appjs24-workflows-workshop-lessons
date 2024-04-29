@@ -39,6 +39,7 @@ Test updates to your “production-ish” app, use updates to add a “version i
 # Bonus?
 - Add semantic versioning with `extra`
     - See https://github.com/expo/UpdatesAPIDemo for how these could be used to deliver critical updates
+- Add automatic app versioning (https://docs.expo.dev/build-reference/app-versions/)
 
 ## See the solution
 Switch to branch: `03-eas-build-and-prod-solution`
