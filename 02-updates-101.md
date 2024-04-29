@@ -28,5 +28,8 @@ Let’s setup an internal testing workflow with EAS Update.
 
 ## Exercise 3: Use PR review workflow to add watermarks
 
+# Bonus?
+- Login to Expo with your development build and try browsing updates right in your development build
+
 ## See the solution
 Switch to branch: `02-updates-101-solution`
