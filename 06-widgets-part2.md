@@ -390,6 +390,7 @@ async function updateWidget() {
     IosWidgetRefresh.reloadWidget();
   }
 }
+```
 
 ## See the solution
 Switch to branch: `05-widgets-part2-solution`
