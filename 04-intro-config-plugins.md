@@ -1,25 +1,31 @@
 # Module 04: Intro to Expo Modules, Config Plugins, and Native Fingerprint
 
 ### Goal
+
 Let’s learn how config plugins modify native projects and let us tap into special native features by using one.
 
 ### Concepts
+
 - How config plugins work with CNG to replace “manually update AndroidManifest.xml, entitlements, MainActivity, etc.” steps that are common when tapping into native capabilities that require more than just code.
 - Meanwhile, Expo Modules API is a way to wrap native code and access it via JS. Modules are also integrated with CNG, but with autolinking.
 
 ### Tasks
+
 - Add expo-quick-actions, setting a custom image in your quick action menu that works on iOS and Android
 - Take a fingerprint at each step of the way to see how your native runtime changes.
 
 ### Resources
+
 - [expo-quick-actions](https://github.com/EvanBacon/expo-quick-actions/blob/c9f54fb948026b75053082660695e0e78f7493b4/example/app.json#L54)
 
 # Exercises
+
 ## Exercise 1. Expo Modules and Fingerprint
 
 > Just pick one platform of your choice (iOS or Android) for this step
 
 ### Your first fingerprints
+
 1. Run `npx @expo/fingerprint@latest > fingerprint.json` to generate your first fingerprint.
 2. Commit this new file.
 3. Run `npx expo install expo-quick-actions` to install the module.
@@ -27,7 +33,8 @@ Let’s learn how config plugins modify native projects and let us tap into spec
 5. Commit your changes.
 
 ### Basic expo-quick-actions implementation
-1. Add the following inside the component in your root **_layout.tsx** file:
+
+1. Add the following inside the component in your root **\_layout.tsx** file:
 
 ```tsx
 useQuickActionRouting();
@@ -35,9 +42,9 @@ useQuickActionRouting();
 React.useEffect(() => {
   QuickActions.setItems<RouterAction>([
     {
-      "title": "Visit the museum",
-      "subtitle": "Plan your next trip",
-      icon: Platform.OS === 'android' ? undefined : "location",
+      title: "Visit the museum",
+      subtitle: "Plan your next trip",
+      icon: Platform.OS === "android" ? undefined : "location",
       id: "0",
       params: { href: "/visit" },
     },
@@ -46,6 +53,7 @@ React.useEffect(() => {
 ```
 
 Add these imports (as well as `Platform` and `React` if they're not already there):
+
 ```tsx
 import * as QuickActions from "expo-quick-actions";
 import { useQuickActionRouting, RouterAction } from "expo-quick-actions/router";
@@ -82,7 +90,7 @@ import { useQuickActionRouting, RouterAction } from "expo-quick-actions/router";
 ]
 ```
 
-3. Add a new quick action in root **_layout.tsx** that uses your icon and goes to the favorites tab:
+3. Add a new quick action in root **\_layout.tsx** that uses your icon and goes to the favorites tab:
 
 ```diff
 QuickActions.setItems<RouterAction>([
@@ -110,11 +118,15 @@ QuickActions.setItems<RouterAction>([
 5. See if you can hunt down the changes in the native projects from the config plugin (if you have a lot of extra time, do the first bonus so you have even more changes to look for).
 
 ## Bonus
+
 ### 1. Static quick actions in iOS
+
 The config plugin also supports adding static actions on iOS- quick actions that will show up before the app is run. Convert the "visit" quick action into a static action using the [example here](https://github.com/EvanBacon/expo-quick-actions?tab=readme-ov-file#config-plugin).
 
 ### 2. Implement quick actions for the two most recent favorited exhibits.
+
 Quick actions can chnage all the time. Try it out!
 
 ## See the solution
+
 Switch to branch: `04-intro-config-plugins-solution`

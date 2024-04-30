@@ -6,7 +6,6 @@ import {
   XCConfigurationList,
 } from "@bacons/xcode";
 
-
 /**
  * It's common for all frameworks to exist in the top-level "Frameworks" folder that shows in Xcode.
  * This is basically just for looks, our plugin should work without it.
@@ -40,7 +39,10 @@ export function addFrameworksToDisplayFolder(
 /**
  * We may need to reference a file in multiple groups, so this ensures we don't create multiple references to them.
  */
-export function getOrCreateBuildFile(project: XcodeProject, file: PBXFileReference): PBXBuildFile {
+export function getOrCreateBuildFile(
+  project: XcodeProject,
+  file: PBXFileReference
+): PBXBuildFile {
   for (const entry of file.getReferrers()) {
     if (PBXBuildFile.is(entry) && entry.props.fileRef.uuid === file.uuid) {
       return entry;
@@ -51,7 +53,10 @@ export function getOrCreateBuildFile(project: XcodeProject, file: PBXFileReferen
   });
 }
 
-export function getFramework(project: XcodeProject, name: string): PBXFileReference {
+export function getFramework(
+  project: XcodeProject,
+  name: string
+): PBXFileReference {
   const frameworkName = name + ".framework";
   for (const [, entry] of project.entries()) {
     if (
@@ -74,13 +79,7 @@ export function getFramework(project: XcodeProject, name: string): PBXFileRefere
  */
 export function createConfigurationList(
   project: XcodeProject,
-  {
-    name,
-    cwd,
-    bundleId,
-    deploymentTarget,
-    currentProjectVersion,
-  }: any
+  { name, cwd, bundleId, deploymentTarget, currentProjectVersion }: any
 ) {
   const debugBuildConfig = XCBuildConfiguration.create(project, {
     name: "Debug",
@@ -168,7 +167,10 @@ export function createConfigurationList(
  * We don't really need this for simulator builds, but this helps if you later try building to a device.
  * The widget extension target needs to have the same development team set as your main target.
  */
-export function applyDevelopmentTeamIdToTargets(project: XcodeProject, developmentTeamId: string | undefined) {
+export function applyDevelopmentTeamIdToTargets(
+  project: XcodeProject,
+  developmentTeamId: string | undefined
+) {
   project.rootObject.props.targets.forEach((target) => {
     if (developmentTeamId) {
       target.setBuildSetting("DEVELOPMENT_TEAM", developmentTeamId);
