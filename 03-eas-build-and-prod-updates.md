@@ -44,6 +44,9 @@ Configure EAS Build, EAS Update. eas.json should have custom profiles for “pro
 
 Test updates to your “production-ish” app, use updates to add a “version info / about” screen that checks your app for updates and shows a refresh button.
 
+Here's some code for this (still needs to be tested in a full updates scenario): https://github.com/keith-kurak/art-thing-2/pull/4/files
+I ended up adding it to the visit page because I couldn't decide on where to link a whole different page.
+
 # Bonus?
 
 - Add semantic versioning with `extra`
