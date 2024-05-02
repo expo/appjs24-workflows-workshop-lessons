@@ -6,15 +6,15 @@ Transition from Expo Go to a Development Build so we can keep the same fast deve
 
 ### Concepts
 
-- Running an Expo development environment both in Expo Go and a development build
+- Running an Expo development environment both in Expo Go and a development build.
 - Native updates are slow, JS updates are fast, so let’s do less of the former and more of the latter by making one development build that will last us a while.
-- Development builds are just debug builds with some extra stuff
+- Development builds are just debug builds with some extra stuff.
 
 ### Tasks
 
-- Run a basic project in Expo Go and add a feature (image sharing) that’s compatible with Expo Go
-- Make a development build, adding all the packages we’ll need for the rest of the morning
-- Add a feature (image cropping) that’s not compatible with Expo Go
+- Run a basic project in Expo Go and add a feature (image sharing) that’s compatible with Expo Go.
+- Make a development build, adding all the packages we’ll need for the rest of the morning.
+- Add a feature (image cropping) that’s not compatible with Expo Go.
 
 ### Resources
 
@@ -23,9 +23,10 @@ Transition from Expo Go to a Development Build so we can keep the same fast deve
 # Exercises
 
 ## Exercise 1. New Feature: Image Sharing
+
 We've just joined our pretend project and it's time to add our first social feature: sharing an image with `expo-sharing`. A share button on each work of art will open a new screen for completing the share.
 
-> When you run your app this time to start developing, run `npx expo start`. It'll default to a development build, but press `s` to switch to Expo Go and run it in there. It'll work because we're not __using__ any dependencies that are not already built into in Expo Go.
+> When you run your app this time to start developing, run `npx expo start`. It'll default to a development build, but press `s` to switch to Expo Go and run it in there. It'll work because we're not **using** any dependencies that are not already built into in Expo Go.
 
 1. Install `expo-sharing` with `npx expo install expo-sharing` (this gets the correct version for your SDK).
 
@@ -35,11 +36,7 @@ We've just joined our pretend project and it's time to add our first social feat
 
 ```tsx
 <Link push href={`/works/${id}/share`}>
-  <Icon
-    name="share-alt"
-    color={colors.tint}
-    size={28}
-  />
+  <Icon name="share-alt" color={colors.tint} size={28} />
 </Link>
 ```
 
@@ -64,11 +61,13 @@ async function share() {
 🏃 **Try it.** See if you can share something!
 
 ## Exercise 2(a). New Feature: Crop the image, too
+
 The social media department likes square images for sharing better. So, let's add image cropping.
 
 1. Run `npm install react-native-image-crop-picker`.
 
 2. Add the import:
+
 ```tsx
 import ImagePicker from "react-native-image-crop-picker";
 ```
@@ -169,45 +168,6 @@ async function share() {
 🏃 **Try it.** You should see a crop screen like the one below and your shared image should reflect your crop.
 
 ![Crop](/assets/01/crop.png)
-
-<!-- we'll want to save this change for Module 02, when we need something to publish a PR preview for -->
-<!--
-### Marking image
-
-One more thing: let's add a watermark to the image. We can use the `react-native-image-marker` library for that.
-
-We just need to add this part in the `crop()`:
-
-```ts
-const markedImage = await Marker.markText({
-  backgroundImage: {
-    src: image.path,
-    scale: 1,
-  },
-  watermarkTexts: [
-    {
-      text: "#cma",
-      position: {
-        position: Position.bottomRight,
-      },
-      style: {
-        color: "#fff",
-        fontSize: 20,
-        textBackgroundStyle: {
-          type: TextBackgroundType.none,
-          color: "#000",
-          paddingX: 16,
-          paddingY: 6,
-        },
-      },
-    },
-  ],
-  quality: 100,
-  filename: image.filename,
-  saveFormat: ImageFormat.jpg,
-});
-```
--->
 
 ## One more thing
 

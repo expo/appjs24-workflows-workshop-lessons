@@ -6,22 +6,22 @@ Let’s expand on our widget to make something more realistic that actually shar
 
 ### Concepts
 
-- Adding native code to your app with a local Expo module
+- Adding native code to your app with a local Expo module.
 - Understanding how existing React Native libraries for widgets work, and why you may or may not want to use them.
-- Sharing data with native features outside of your app
-- Accepting parameters in config plugins
+- Sharing data with native features outside of your app.
+- Accepting parameters in config plugins.
 
 ### Tasks
 
-- Write data from your app to a file so the widget can read it
+- Write data from your app to a file so the widget can read it.
 - Pick one platform to start (if you get done early, you can do the second one), and
   - Extend the config plugin as needed to support the added features
   - Style your widget
-  - Read data into the widget
+  - Read data into the widget.
 
 ### Resources
 
-- Link to any helpful docs
+- Link to any helpful docs.
 
 # Exercises
 

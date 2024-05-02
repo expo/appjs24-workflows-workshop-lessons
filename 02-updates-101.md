@@ -4,9 +4,48 @@
 
 Let’s setup an internal testing workflow with EAS Update.
 
+<!-- we'll want to save this change for Module 02, when we need something to publish a PR preview for -->
+<!--
+### Marking image
+
+One more thing: let's add a watermark to the image. We can use the `react-native-image-marker` library for that.
+
+We just need to add this part in the `crop()`:
+
+```ts
+const markedImage = await Marker.markText({
+  backgroundImage: {
+    src: image.path,
+    scale: 1,
+  },
+  watermarkTexts: [
+    {
+      text: "#cma",
+      position: {
+        position: Position.bottomRight,
+      },
+      style: {
+        color: "#fff",
+        fontSize: 20,
+        textBackgroundStyle: {
+          type: TextBackgroundType.none,
+          color: "#000",
+          paddingX: 16,
+          paddingY: 6,
+        },
+      },
+    },
+  ],
+  quality: 100,
+  filename: image.filename,
+  saveFormat: ImageFormat.jpg,
+});
+```
+-->
+
 ### Concepts
 
-- Running an update in a development build
+- Running an update in a development build.
 - Automatically publishing updates for testers when committing code.
 
 ### Tasks
