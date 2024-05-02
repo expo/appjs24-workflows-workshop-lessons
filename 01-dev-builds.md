@@ -22,46 +22,60 @@ Transition from Expo Go to a Development Build so we can keep the same fast deve
 
 # Exercises
 
-## Exercise 1. Add image sharing with Expo Go
+## Exercise 1. New Feature: Image Sharing
+We've just joined our pretend project and it's time to add our first social feature: sharing an image with `expo-sharing`. A share button on each work of art will open a new screen for completing the share.
 
-We have three pieces here.
+> When you run your app this time to start developing, run `npx expo start`. It'll default to a development build, but press `s` to switch to Expo Go and run it in there. It'll work because we're not __using__ any dependencies that are not already built into in Expo Go.
 
-An import statement:
+1. Install `expo-sharing` with `npx expo install expo-sharing` (this gets the correct version for your SDK).
 
-```ts
-import * as Sharing from "expo-sharing";
+2. Add **share.tsx** to **app/works/[id]**. You can get the code for this file [from here](/files/01/share.tsx).
+
+3. Add the share button to **app/works/[id]/index.tsx**, next to the favorite button:
+
+```tsx
+<Link push href={`/works/${id}/share`}>
+  <Icon
+    name="share-alt"
+    color={colors.tint}
+    size={28}
+  />
+</Link>
 ```
 
-A share function (put this inside the `ShareWork` screen):
+To space those two buttons out better, you can add `gap-x-4` to `className` of the view containing the two buttons.
 
-```ts
+<!-- TODO: nice place for an image of the share button -->
+
+4. Import `expo-sharing` and add a share function to the component:
+
+```tsx
+import * as Sharing from "expo-sharing";
+
+// ...
+
 async function share() {
   await Sharing.shareAsync(work.images.web.url);
 }
 ```
 
-And finally a button to trigger it:
+5. Call the `share()` function in the button's `onPress`.
+
+🏃 **Try it.** See if you can share something!
+
+## Exercise 2(a). New Feature: Crop the image, too
+The social media department likes square images for sharing better. So, let's add image cropping.
+
+1. Run `npm install react-native-image-crop-picker`.
+
+2. Add the import:
+```tsx
+import ImagePicker from "react-native-image-crop-picker";
+```
+
+3. Let's quickly check if the cropping works. Add to the main function in the **app/works/[id]/share.tsx** file:
 
 ```tsx
-<Button onPress={share} title="Share" />
-```
-
-## Exercise 2. Make a development build with a native runtime that works with all our upcoming features
-
-Let's try to add cropping to our project. First we need to import some libraries that we had pre-installed in the project:
-
-```ts
-import ImagePicker from "react-native-image-crop-picker";
-import Marker, {
-  ImageFormat,
-  Position,
-  TextBackgroundType,
-} from "react-native-image-marker";
-```
-
-Now let's quickly check if the cropping works. Let's add this to the main function in the `app/works/[id]/share.tsx` file:
-
-```ts
 async function crop() {
   const image = await ImagePicker.openCropper({
     path: work.images.web.url,
@@ -72,44 +86,35 @@ async function crop() {
 }
 ```
 
-And this in the `return` block so that we are able to call it:
+And a button calling `crop()` before the Share button:
 
 ```tsx
-<Button onPress={crop} title="Crop" />
+<RoundButton onPress={crop} title="Crop" />
 ```
 
-What happened? We got an error:
+🏃 **Try it.** Does cropping work? Or is there an error?
 
 ![Error](/assets/01/error.png)
 
-This is because Expo Go doesn't support arbitrary native dependencies. But there's an easy way to fix it. Let's switch to a development build.
+This is because Expo Go doesn't support any native dependencies that aren't already built into it. But there's an easy way to fix it. Let's switch to a development build.
 
-We just need to install the package:
+4. Install the `expo-dev-client` package:
 
 ```sh
 npx expo install expo-dev-client
 ```
 
-Now when we restart the `npx expo start`, we will see an error that we are missing `bundleIndentifier`.
+5. This time, we need to actually build the app, so run `npx run:ios` or `npx run:android`. Eventually the app and the bundler will start after the build is complete.
 
-Let's build the iOS app `npx expo run:ios` and we will be prompted to fill in the details so that our standalone iOS and Android apps can be built.
+<!-- NOTE: we actually want them to set the gitignore in a later lesson -->
 
-This is how we know that we succeeded in making a development build:
+## Exercise 2(b): Cropping image (for real this time, with the development build)
 
-![Development Build](/assets/01/dev-build.png)
+Let's finish up adding cropping.
 
-We can now add `/ios` and `/android` to our `.gitignore` file.
+1. Add a state variable to store the cropped image path and update `crop()` to save the image to the state variable:
 
-```
-/ios
-/android
-```
-
-### Cropping image
-
-We can now proceed to add image cropping.
-
-```ts
+```tsx
 const [croppedImage, setCroppedImage] = useState<string | null>(null);
 
 async function crop() {
@@ -123,50 +128,50 @@ async function crop() {
 }
 ```
 
-We need to adjust the logic for finding the proper image path:
+2. Just before the component's return statement, set a `path` variable that we'll use for switching between the original image and the cropped version:
 
 ```ts
-const path = croppedImage
+const imagePath = croppedImage
   ? Platform.OS === "android"
     ? `file:${croppedImage}`
     : croppedImage
   : work && work.images.web.url;
 ```
 
+And change the `Image` source to that path:
+
 ```diff
 <Image
 -  source={{ uri: work && work.images.web.url }}
-+  source={{ uri: path }}
++  source={{ uri: imagePath }}
 ```
 
-We should be able to see this screen when we press the button:
-
-![Crop](/assets/01/crop.png)
-
-Let's also change our `share()` implementation to account for the changes we made:
+3. Let's also change our `share()` implementation to account for the changes we made:
 
 ```ts
 async function share() {
-  if (!croppedImage) {
-    return;
-  }
-
   await Sharing.shareAsync(
     Platform.OS === "android" ? `file:${croppedImage}` : croppedImage
   );
 }
 ```
 
-And some changes are required to the button too:
+4. Disable the Share button to complete the effect:
 
-```tsx
-<Button
-  onPress={croppedImage ? share : undefined}
-  disabled={croppedImage === null}
+```diff
+<RoundButton
   title="Share"
+  onPress={share}
++  disabled={!croppedImage}
 />
 ```
 
+🏃 **Try it.** You should see a crop screen like the one below and your shared image should reflect your crop.
+
+![Crop](/assets/01/crop.png)
+
+<!-- we'll want to save this change for Module 02, when we need something to publish a PR preview for -->
+<!--
 ### Marking image
 
 One more thing: let's add a watermark to the image. We can use the `react-native-image-marker` library for that.
@@ -202,6 +207,13 @@ const markedImage = await Marker.markText({
   saveFormat: ImageFormat.jpg,
 });
 ```
+-->
+
+## One more thing
+
+Even though `npx expo run:ios` or `npx expo run:android` both built and ran your development build in one command, now that you have your development build installed, you don't have to wait for the build anymore.
+
+Try killing the bundler process, and running `npx expo start`. Press `a` or `i` to open the app on your Android or iOS emulator/simulator. The Expo CLI should open your development build this time.
 
 ## See the solution
 
