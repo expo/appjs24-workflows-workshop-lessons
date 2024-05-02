@@ -26,11 +26,10 @@ Let’s learn how config plugins modify native projects and let us tap into spec
 
 ### Your first fingerprints
 
-1. Run `npx @expo/fingerprint@latest > fingerprint.json` to generate your first fingerprint.
-2. Commit this new file.
-3. Run `npx expo install expo-quick-actions` to install the module.
-4. Run `npx @expo/fingerprint@latest fingerprint.json` to compare your project with your last fingerprint. Did it change?
-5. Commit your changes.
+1. Run `npx @expo/fingerprint@latest ./ > fingerprint.json` to generate your first fingerprint.
+2. Run `npx expo install expo-quick-actions` to install the module.
+3. Run `npx @expo/fingerprint@latest fingerprint.json` to compare your project with your last fingerprint. Did it change?
+4. Run `npx @expo/fingerprint@latest ./ > fingerprint.json` again and commit the file to save your newest fingerprint.
 
 ### Basic expo-quick-actions implementation
 
@@ -63,7 +62,7 @@ import { useQuickActionRouting, RouterAction } from "expo-quick-actions/router";
 
 🏃**Try it.** Open the app, leave the app, long press on the icon. Do you get a quick action?
 
-3. Run `npx @expo/fingerprint@latest fingerprint.json`. Did it change?
+3. Run `npx @expo/fingerprint@latest ./ fingerprint.json`. Are there any changes?
 
 ## Exercise 2. More capabilities via config plugins
 
@@ -113,7 +112,7 @@ QuickActions.setItems<RouterAction>([
 
 🏃**Try it.** Build your app on your preferred platform and run it. Do you see the new action with the custom icon?
 
-4. Run `npx @expo/fingerprint@latest fingerprint.json`. What changed this time?
+4. Run `npx @expo/fingerprint@latest ./ fingerprint.json`. What changed this time?
 
 5. See if you can hunt down the changes in the native projects from the config plugin (if you have a lot of extra time, do the first bonus so you have even more changes to look for).
 
