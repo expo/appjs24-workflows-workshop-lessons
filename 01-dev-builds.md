@@ -110,7 +110,7 @@ npx expo install react-native-image-marker
 ```
 **TIP**: If Expo doesn't have a recommended version for a package, `expo install` will just install the latest with your project's package manager, so you can use `expo install` all the time.
 
-6. This time, we need to actually build the app, so run `npx run:ios` or `npx run:android`. Eventually the app and the bundler will start after the build is complete.
+6. This time, we need to actually build the app, so run `npx expo run:ios` or `npx expo run:android`. Eventually the app and the bundler will start after the build is complete.
 
 <!-- NOTE: we actually want them to set the gitignore in a later lesson -->
 
