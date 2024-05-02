@@ -91,7 +91,7 @@ And a button calling `crop()` before the Share button:
 <RoundButton onPress={crop} title="Crop" />
 ```
 
-🏃 **Try it.** Does cropping work? Or is there an error?
+🏃 **Try it.** Does cropping work? Or did you even get that far before facing an error?
 
 ![Error](/assets/01/error.png)
 
@@ -116,13 +116,22 @@ npx expo install react-native-image-marker
 
 ## Exercise 2(b): Cropping image (for real this time, with the development build)
 
-Let's finish up adding cropping.
+Let's try adding that image cropping functionality again.
 
 1. Add a state variable to store the cropped image path and update `crop()` to save the image to the state variable:
 
 ```tsx
-const [croppedImage, setCroppedImage] = useState<string | null>(null);
+// update your import to get the type for the state variable
+import ImagePicker, { Image as ImageType } from "react-native-image-crop-picker";
 
+// ...
+
+// Add state
+const [croppedImage, setCroppedImage] = useState<ImageType | null>(null);
+
+// ...
+
+// update crop
 async function crop() {
   const image = await ImagePicker.openCropper({
     path: work.images.web.url,
@@ -134,22 +143,12 @@ async function crop() {
 }
 ```
 
-2. Just before the component's return statement, set a `path` variable that we'll use for switching between the original image and the cropped version:
-
-```ts
-const imagePath = croppedImage
-  ? Platform.OS === "android"
-    ? `file:${croppedImage}`
-    : croppedImage
-  : work && work.images.web.url;
-```
-
-And change the `Image` source to that path:
+2. Update the image URI to switch between the original image and the cropped version:
 
 ```diff
 <Image
 -  source={{ uri: work && work.images.web.url }}
-+  source={{ uri: imagePath }}
++  source={{ uri: croppedImage ? croppedImage.path : (work && work.images.web.url) }}
 ```
 
 3. Let's also change our `share()` implementation to account for the changes we made:
@@ -157,7 +156,7 @@ And change the `Image` source to that path:
 ```ts
 async function share() {
   await Sharing.shareAsync(
-    Platform.OS === "android" ? `file:${croppedImage}` : croppedImage
+    croppedImage?.path!
   );
 }
 ```
