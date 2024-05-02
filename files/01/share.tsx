@@ -16,7 +16,7 @@ export default function ShareWork() {
           title: "Share",
         }}
       />
-      <View className="py-4 px-4 bg-shade-2 gap-y-4">
+      <View className="py-4 px-4 bg-shade-2 gap-4">
         <Text className="text-2xl text-center">
           Share a clip of this work with your friends.
         </Text>
