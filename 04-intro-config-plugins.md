@@ -61,7 +61,7 @@ import { useQuickActionRouting, RouterAction } from "expo-quick-actions/router";
 
 2. Build your app (e.g., `npx expo run:ios` or `npx expo run:android`).
 
-**Try it.** Open the app, leave the app, long press on the icon. Do you get a quick action?
+🏃**Try it.** Open the app, leave the app, long press on the icon. Do you get a quick action?
 
 3. Run `npx @expo/fingerprint@latest fingerprint.json`. Did it change?
 
@@ -111,7 +111,7 @@ QuickActions.setItems<RouterAction>([
 ]);
 ```
 
-**Try it.** Build your app on your preferred platform and run it. Do you see the new action with the custom icon?
+🏃**Try it.** Build your app on your preferred platform and run it. Do you see the new action with the custom icon?
 
 4. Run `npx @expo/fingerprint@latest fingerprint.json`. What changed this time?
 

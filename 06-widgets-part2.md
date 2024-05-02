@@ -150,7 +150,7 @@ import { widgetTaskHandler } from "@/widgets/android/widget-task-handler";
 registerWidgetTaskHandler(widgetTaskHandler);
 ```
 
-**Try it.** Run `npx expo prebuild --clean --platform android && npx expo run:android`, and you should be able to add your new JSX-based widget.
+🏃**Try it.** Run `npx expo prebuild --clean --platform android && npx expo run:android`, and you should be able to add your new JSX-based widget.
 
 ### Exercise 3(a). Read data into widget
 
@@ -257,7 +257,7 @@ await saveLatestShare(file.uri);
 await updateWidget();
 ```
 
-**Try it.** Run `npx expo run:android` and try sharing some images. Does your widget update? If you resize your widget, what happens to the image?
+🏃**Try it.** Run `npx expo run:android` and try sharing some images. Does your widget update? If you resize your widget, what happens to the image?
 
 ## Exercises - iOS
 
@@ -366,7 +366,7 @@ let fileUrl = groupDir.appendingPathComponent("latest_share.jpg")
   }
 ```
 
-**Try it.** The updates may not show up right away in your widget (see directly below), but hopefully all this code runs!
+🏃**Try it.** The updates may not show up right away in your widget (see directly below), but hopefully all this code runs!
 
 ### Exercise 5(i). The smallest Expo Module ever: refresh the widget on-demand
 
@@ -430,6 +430,8 @@ async function updateWidget() {
   }
 }
 ```
+
+🏃**Try it.** Does the widget update as soon as you share a file?
 
 ## See the solution
 

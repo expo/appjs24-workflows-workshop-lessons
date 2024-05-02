@@ -278,4 +278,4 @@ if (contents.trim().length) {
 }
 ```
 
-**Try it.** Run `npx expo prebuild --clean --platform ios`. Does it apply the configuration correctly? Can you run it and see the widget with `npx expo run:ios`?
+🏃**Try it.** Run `npx expo prebuild --clean --platform ios`. Does it apply the configuration correctly? Can you run it and see the widget with `npx expo run:ios`?

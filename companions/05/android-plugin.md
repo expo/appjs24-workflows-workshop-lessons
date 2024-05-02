@@ -98,6 +98,8 @@ import fs from "fs";
 import path from "path";
 ```
 
+🏃**Try it.** Run `npx expo prebuild --clean --platform android`. Inspect your files and see if it applied the changes you made to the config plugin.
+
 ## Set string resources
 
 Add a function to set our lone string resource. We'll use the `withStringsXml` default mod to help with this. You can set your changes on `modResults` and it'll automatically write the changes to the **strings.xml** file at the end of the plugin execution:
@@ -179,4 +181,4 @@ Add this to the mod chain in `withAndroidWidget`:
 config = withAndroidManifestReceiver(config, widgetName);
 ```
 
-**Try it.** Run `npx expo prebuild --clean --platform android`. Does it apply the configuration correctly? Can you run it and see the widget with `npx expo run:android`?
+🏃**Try it.** Run `npx expo prebuild --clean --platform android`. Does it apply the configuration correctly? Can you run it and see the widget with `npx expo run:android`?

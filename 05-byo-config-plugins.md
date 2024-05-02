@@ -103,7 +103,7 @@ plugins: [
 ];
 ```
 
-**Try it.** Run `npx expo prebuild --clean`. Do you see your console logs?
+🏃**Try it.** Run `npx expo prebuild --clean`. Do you see your console logs?
 
 ## Exercise 2. Choose Your Own Widget Adventure
 
@@ -267,7 +267,7 @@ internal fun updateAppWidget(
 
 (this binds the widget definition, data provider, and standard widget actions)
 
-**Try it.** Run `npx expo run:android` and try to add your widget.
+🏃**Try it.** Run `npx expo run:android` and try to add your widget.
 
 #### Getting ready to make a config plugin
 
@@ -296,7 +296,7 @@ Press Activate:
 
 <img src="./assets/05/xcode-widget-create-4.png" alt="xcode widget creation" width="400"/>
 
-**Try it.** Run `npx expo run:ios` on your simulator and try to add your widget. Annoyingly, on your simulator, the widget will not appear in the list until you enter a search (search "widget" and you'll see it).
+🏃**Try it.** Run `npx expo run:ios` on your simulator and try to add your widget. Annoyingly, on your simulator, the widget will not appear in the list until you enter a search (search "widget" and you'll see it).
 
 #### Getting ready to make a config plugin
 
