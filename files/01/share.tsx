@@ -60,7 +60,7 @@ function RoundButton({
       onPress={onPress}
       disabled={disabled}
       className={`py-2 rounded-md active:opacity-50 ${
-        disabled ? "bg-gray-400" : "bg-tint"
+        disabled ? "bg-gray-500" : "bg-tint"
       }`}
     >
       <Text className="text-xl text-center text-white">{title}</Text>
