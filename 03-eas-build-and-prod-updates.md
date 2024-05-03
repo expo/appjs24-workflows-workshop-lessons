@@ -79,10 +79,75 @@ TIP: You can use [Orbit](https://expo.dev/orbit), our tool for running builds on
 
 ## Exercise 3: Update your app
 
-Test updates to your “production-ish” app, use updates to add a “version info / about” screen that checks your app for updates and shows a refresh button.
+Let's now add that production updates work. For that we need to build app with `--profile production`. We can then use Orbit to install it on the device. We will notice the ` (dev)` suffix is gone.
 
-Here's some code for this (still needs to be tested in a full updates scenario): https://github.com/keith-kurak/art-thing-2/pull/4/files
-I ended up adding it to the visit page because I couldn't decide on where to link a whole different page.
+> NOTE: if you are running the build on your iOS, use `preview` profile which has is configured for internal distribution. Otherwise it won't work!
+
+In `app/visit.tsx`, let's add code which will read update information:
+
+```diff
+export default function VisitScreen() {
+  const { isLarge } = useMediaQuery();
+
++   const updateInfo = Updates.useUpdates();
++
++   useEffect(() => {
++     (async function runAsync() {
++       const status = await Updates.checkForUpdateAsync();
++       if (status.isAvailable) {
++         await Updates.fetchUpdateAsync();
++       }
++     })();
++   }, []);
+```
+
+And then we have to display it:
+
+```tsx
+return (
+  <View>
+    {/* Existing code */}
+    <View className="row-y-2 items-center my-10 mx-10">
+      <Text className="text-l font-bold">Version</Text>
+      <Text className="text-l">
+        {Application.nativeApplicationVersion}-{Application.nativeBuildVersion}
+      </Text>
+      <Text className="text-l">{Updates.updateId || "n/a"}</Text>
+      {updateInfo.isChecking || updateInfo.isDownloading ? (
+        <ActivityIndicator size="small" />
+      ) : null}
+      {updateInfo.isUpdateAvailable && updateInfo.isUpdatePending ? (
+        <Pressable
+          onPress={() => {
+            Updates.reloadAsync();
+          }}
+        >
+          <Text className="text-xl my-2 text-tint">Update your app</Text>
+        </Pressable>
+      ) : null}
+      {updateInfo.downloadError ? (
+        <>
+          <Text className="text-l my-2 text-center">
+            There's an update available for your app, but the download failed.
+          </Text>
+          <Text className="text-l my-2 text-center">
+            {updateInfo.downloadError?.message}
+          </Text>
+        </>
+      ) : null}
+    </View>
+    {/* ... */}
+  </View>
+);
+```
+
+We can publish the update using:
+
+```bash
+eas update --branch preview --message "Testing preview"
+```
+
+We can restart the app and we should see the update information in the visit screen.
 
 # Bonus?
 
