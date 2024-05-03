@@ -11,12 +11,46 @@ There's a few things that will be referred to a lot within the config plugin. Th
 - project root (e.g., the top-level folder)
 - native project root (**android**)
 
-So, let's put those in **withAndroidWidget.ts**. Remove the reference to `withDangerousMod`, and add the following right at the top of the function:
+So, let's put those in **withAndroidWidget.ts**. Remove the reference to `withDangerousMod`, return the `config`, and add the variables right at the top of the function:
 
-```ts
-const widgetName = "HelloAppWidget";
-const widgetPath = "widgets/android";
+```diff
+const withAndroidWidget: ConfigPlugin = (config) => {
+-  return withDangerousMod(config, [
+-    "android",
+-    (dangerousConfig) => {
+-      console.log("Android widget!");
+-      return dangerousConfig;
+-    },
+-  ]);
++  const widgetName = "HelloAppWidget";
++  const widgetPath = "widgets/android";
++
++  // .. rest of plugin code goes here
++
++  return config;
+};
+
 ```
+
+<details>
+  <summary>Expand to just get the whole file's new code for easy copying</summary>
+
+  ```ts
+import { ConfigPlugin } from "@expo/config-plugins";
+
+const withAndroidWidget: ConfigPlugin = (config) => {
+  const widgetName = "HelloAppWidget";
+  const widgetPath = "widgets/android";
+
+  // .. rest of plugin code goes here
+
+  return config;
+};
+
+export default withAndroidWidget;
+  ```
+
+</details>
 
 Also, add a function somewhere in the file to let us use the one widget name to derive other file names:
 
@@ -76,6 +110,8 @@ function withWidgetFiles(
   ]);
 }
 ```
+
+> **That's a lot of code! What's it doing?** It's just copying the files that you copied to the **widgets/android** folder earlier.
 
 Add this to `withAndroidWidget`, prior to returning the config:
 

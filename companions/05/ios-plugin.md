@@ -28,7 +28,7 @@ There's a few things that will be referred to a lot within the config plugin. Th
 - the name of the widget extension ("HelloWidget")
 - the widget bundle ID (your bundle id plus `HelloWidget`)
 
-So, let's put those in **withIosWidget.ts**, right inside the `withDangerousMod` callback:
+So, let's put those in **withIosWidget.ts**, right inside the `withDangerousMod` callback, before the return statement:
 
 ```ts
 // constants
@@ -79,11 +79,9 @@ import {
 } from "./apple-utils";
 ```
 
-## Read iOS project and input files, bind them to Xcode project files
+## Read and write iOS **.pbxproj** file.
 
-Below your constants, open the Xcode project file and read the files you added to the **widgets** folder. These will be used in subsequent steps. The cool thing about leaving these files in-place while referencing in the **.pbxproj** file is that you can open Xcode, edit these files, and they will update in your native project and the changes can be committed to source control. So, you can have full intellisense for SwiftUI!
-
-Add this code:
+Let's add the bookends of our config plugin: the part that reads in the **.pbxproj** file and the part that writes it back to disk once the modifications are complete. Copy this in, after setting the variables, but before the `return config` statement:
 
 ```ts
 // open the Xcode project file
@@ -91,6 +89,30 @@ Add this code:
 const project = XcodeProject.open(
   IOSConfig.Paths.getPBXProjectPath(dangerousConfig.modRequest.projectRoot)
 );
+
+// ** BEGIN PBXPROJ MODIFICATIONS **
+
+
+
+// ** END PBXPROJ MODIFICATIONS **
+
+// Write in-memory project to disk
+const contents = xcodeParse.build(project.toJSON());
+if (contents.trim().length) {
+  fs.writeFileSync(IOSConfig.Paths.getPBXProjectPath(projectRoot), contents);
+}
+```
+
+## Read iOS project and input files, bind them to Xcode project files
+
+> Right-click -> "Format Document" will be your friend throughout this!
+
+Just after opening the **.pbxproj** folder, read the files you added to the **widgets** folder. These will be used in subsequent steps. The cool thing about leaving these files in-place while referencing in the **.pbxproj** file is that you can open Xcode, edit these files, and they will update in your native project and the changes can be committed to source control. So, you can have full intellisense for SwiftUI!
+
+Add this code:
+
+```ts
+// ** Copy code and asset files **
 
 // grab all swift files in the project, create refs with their basenames
 const swiftFiles = globSync("*.swift", {
@@ -130,6 +152,8 @@ The contents of `swiftFiles` and `assetFiles` will be Xcode project file referen
 The next snippet will create a "group" containing all the widget files, and then add that group to the main project files group. After this, you'll be able to open the project in Xcode and see a "HelloWidget" folder under the project, but it will contain files that are actually in **widgets/ios**:
 
 ```ts
+// ** Create widget file group **
+
 // create widget group
 const group = PBXGroup.create(project, {
   name: widgetFolderName,
@@ -162,6 +186,8 @@ project.rootObject.props.mainGroup.props.children.unshift(group);
 Add these next. Read the comments if they interest you.
 
 ```ts
+// ** Display Frameworks **
+
 // Add the widget target to the display folder (cosmetic, makes it look like a normal Xcode project when you open it)
 addFrameworksToDisplayFolder(
   project,
@@ -196,6 +222,8 @@ Actually, if you want to refactor anything into a separate function, consider ma
 Add this next to create the widget target and setup its build phases:
 
 ```ts
+// ** Setup widget build target **
+
 const widgetTarget = project.rootObject.createNativeTarget({
   buildConfigurationList: createConfigurationList(project, {
     name: widgetFolderName,
@@ -233,6 +261,8 @@ This is the part that takes all that Widget setup- all the files and build confi
 Add this:
 
 ```ts
+// ** Bind widget target to main app target **
+
 const mainAppTarget = project.rootObject.getMainAppTarget("ios");
 
 const containerItemProxy = PBXContainerItemProxy.create(project, {
@@ -267,15 +297,8 @@ const myDevelopmentTeamId =
 applyDevelopmentTeamIdToTargets(project, myDevelopmentTeamId);
 ```
 
-## Write the project file
+## That's it!
 
-All that just worked on **project.pbxproj** in memory. Let's write it to disk:
-
-```ts
-const contents = xcodeParse.build(project.toJSON());
-if (contents.trim().length) {
-  fs.writeFileSync(IOSConfig.Paths.getPBXProjectPath(projectRoot), contents);
-}
-```
+We've made all the changes needed for the **.pbxproj** file. Give it a try.
 
 🏃**Try it.** Run `npx expo prebuild --clean --platform ios`. Does it apply the configuration correctly? Can you run it and see the widget with `npx expo run:ios`?

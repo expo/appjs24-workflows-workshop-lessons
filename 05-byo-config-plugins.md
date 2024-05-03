@@ -94,6 +94,18 @@ export default withWidget;
   return {
 ```
 
+<details>
+  <summary>Expand to just get just the added code for easy copying</summary>
+
+  ```ts
+import 'ts-node/register';
+import { ExpoConfig } from 'expo/config';
+
+module.exports = ({ config } : { config: ExpoConfig }) => {
+  ```
+
+</details>
+
 4. Add your custom plugin to the plugins array:
 
 ```ts
@@ -103,7 +115,7 @@ plugins: [
 ];
 ```
 
-🏃**Try it.** Run `npx expo prebuild --clean`. Do you see your console logs?
+🏃**Try it.** Run `npx expo prebuild --clean --no-install`. Do you see your console logs?
 
 ## Exercise 2. Choose Your Own Widget Adventure
 
@@ -200,10 +212,13 @@ The below instructions are inspired from the Android Studio wizard, but also fro
 
 (a typical widget would involve a lot of resources, we're just adding one to demonstrate the config plugin mod for editing resources)
 
-4. In **android/app/src/main/java** add **HelloAppWidget.kt**:
+4. In **android/app/src/main/java/com/yourusernamehere/appjs24workflowsworkshopcode** add **HelloAppWidget.kt**:
+
+> Make sure the package matches whatever is in your **MainActivity.kt**.
 
 ```kotlin
-package com.expo.appjs24workflowsworkshopcode
+// update "yourusernamehere" to match your actual project namespace
+package com.yourusernamehere.appjs24workflowsworkshopcode
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
@@ -272,7 +287,7 @@ internal fun updateAppWidget(
 #### Getting ready to make a config plugin
 
 1. Commit this code. You'll use this in the next step to compare with the results of your config plugin.
-2. Create a folder called **plugins/android**, and copy the following files there:
+2. Create a folder called **widgets/android**, and copy the following files there:
 
 - **hello_app_widget_info.xml**
 - **hello_app_widget.xml**
@@ -296,12 +311,12 @@ Press Activate:
 
 <img src="./assets/05/xcode-widget-create-4.png" alt="xcode widget creation" width="400"/>
 
-🏃**Try it.** Run `npx expo run:ios` on your simulator and try to add your widget. Annoyingly, on your simulator, the widget will not appear in the list until you enter a search (search "widget" and you'll see it).
+🏃**Try it.** Run `npx expo run:ios` on your simulator and try to add your widget. Annoyingly, on your simulator, the widget will not appear in the list until you enter a search (search "appjs" and you'll see it).
 
 #### Getting ready to make a config plugin
 
 1. Commit this code. You'll use this in the next step to compare with the results of your config plugin.
-2. Create a folder called **plugins/ios**, and copy the following files there (all in **ios/HelloWidget**):
+2. Create a folder called **widgets/ios**, and copy the following files there (all in **ios/HelloWidget**):
 
 - **HelloWidget.swift**
 - **HelloWidgetBundle.swift**
