@@ -108,6 +108,7 @@ npx expo install expo-dev-client
 ```sh
 npx expo install react-native-image-marker
 ```
+
 **TIP**: If Expo doesn't have a recommended version for a package, `expo install` will just install the latest with your project's package manager, so you can use `expo install` all the time.
 
 6. This time, we need to actually build the app, so run `npx expo run:ios` or `npx expo run:android`. Eventually the app and the bundler will start after the build is complete.
@@ -122,7 +123,9 @@ Let's try adding that image cropping functionality again.
 
 ```tsx
 // update your import to get the type for the state variable
-import ImagePicker, { Image as ImageType } from "react-native-image-crop-picker";
+import ImagePicker, {
+  Image as ImageType,
+} from "react-native-image-crop-picker";
 
 // ...
 
@@ -155,9 +158,11 @@ async function crop() {
 
 ```ts
 async function share() {
-  await Sharing.shareAsync(
-    croppedImage?.path!
-  );
+  if (!croppedImage) {
+    return;
+  }
+
+  await Sharing.shareAsync(croppedImage.path);
 }
 ```
 
