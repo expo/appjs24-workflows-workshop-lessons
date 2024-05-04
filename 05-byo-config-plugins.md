@@ -311,7 +311,7 @@ Press Activate:
 
 <img src="./assets/05/xcode-widget-create-4.png" alt="xcode widget creation" width="400"/>
 
-🏃**Try it.** Run `npx expo run:ios` on your simulator and try to add your widget. Annoyingly, on your simulator, the widget will not appear in the list until you enter a search (search "appjs" and you'll see it).
+🏃**Try it.** Run `npx expo run:ios` on your simulator and try to add your widget. Annoyingly, on your simulator, the widget will not appear in the list until you enter a search (search "Art" and you'll see it).
 
 #### Getting ready to make a config plugin
 

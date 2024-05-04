@@ -56,6 +56,10 @@ export async function readLatestShareAsBase64() {
 
   return "data:image/jpg;base64," + imageBase64;
 }
+
+async function updateWidget() {
+  // TODO
+}
 ```
 
 3. Right before calling `shareAsync`, call your new library:
@@ -64,7 +68,11 @@ export async function readLatestShareAsBase64() {
 import { saveLatestShare } from "@/widgets/common/widget-share";
 
 // Later...
-await saveLatestShare(file.uri);
+async function share() {
+  await saveLatestShare(editedImagePath);
+  await updateWidget();
+  await Sharing.shareAsync(editedImagePath!);
+}
 ```
 
 ## Exercises - Android
@@ -77,8 +85,8 @@ Android XML layouts aren't that fun to mess around with. Fortunately, you can cr
 
 2. Update **HelloAppWidget.kt** to inherit from the package's widget provider:
 
-```kt
-package com.expo.appjsworkflowscode // or whatever your package is named
+```kotlin
+package com.[username].appjs24workflowsworkshopcode // or whatever your package is named
 
 import com.reactnativeandroidwidget.RNWidgetProvider
 
@@ -86,7 +94,58 @@ class HelloAppWidget : RNWidgetProvider() {
 }
 ```
 
-3. Update the config plugin to add the service in **AndroidManifest.xml**
+3. Update the config plugin to add the service in **AndroidManifest.xml**. Add this function to **plugins/withAndroidWidget.ts**:
+
+```ts
+function withAndroidManifestReceiver(
+  config: ExpoConfig,
+  widgetName: string
+) {
+  return withAndroidManifest(config, async (androidManifestConfig) => {
+    const mainApplication = AndroidConfig.Manifest.getMainApplicationOrThrow(
+      androidManifestConfig.modResults
+    );
+    mainApplication.receiver = mainApplication.receiver ?? [];
+
+    mainApplication.receiver?.push({
+      $: {
+        "android:name": `.${widgetName}`,
+        "android:exported": "false",
+      } as any,
+      "intent-filter": [
+        {
+          action: [
+            {
+              $: {
+                "android:name": "android.appwidget.action.APPWIDGET_UPDATE",
+              },
+            },
+            {
+              $: {
+                "android:name": `${androidManifestConfig.android?.package}.WIDGET_CLICK`,
+              },
+            },
+          ],
+        },
+      ],
+      "meta-data": {
+        $: {
+          "android:name": "android.appwidget.provider",
+          "android:resource": `@xml/${camelToSnakeCase(widgetName)}_info`,
+        },
+      },
+    } as any);
+    return androidManifestConfig;
+  });
+}
+```
+
+Then call it right before returning the config in `withAndroidWidget()`:
+
+```ts
+config = withAndroidManifestReceiver(config, widgetName);
+```
+
 
 4. In **widgets/android**, create **HelloAppWidget.tsx**:
 
@@ -228,7 +287,7 @@ props.renderWidget(
 
 That'll handle if the widget refreshes itself or gets resized, but it will not update the widget instantly if a new image is shared. We'll need to request an update to do that.
 
-2. In **widget-share.ts**, let's add an `updateWidget()` function:
+2. In **widget-share.ts**, fill in the `updateWidget()` function:
 
 ```tsx
 import { requestWidgetUpdate } from "react-native-android-widget";
@@ -247,16 +306,6 @@ async function updateWidget() {
 }
 ```
 
-3. Right before calling `shareAsync`, call `updateWidget()`:
-
-```tsx
-import { saveLatestShare, updateWidget } from "@/widgets/common/widget-share";
-
-// Later...
-await saveLatestShare(file.uri);
-await updateWidget();
-```
-
 🏃**Try it.** Run `npx expo run:android` and try sharing some images. Does your widget update? If you resize your widget, what happens to the image?
 
 ## Exercises - iOS
@@ -265,11 +314,13 @@ await updateWidget();
 
 Because your main app and its widget extension are technically separate apps with their own bundle ID's, they can't just automatically share data. Instead, they need to be part of an "app group", a sort of shared bundle ID that lets apps share data with each other. A common convention is to prefix your main app's bundle ID with `group.`.
 
+<!-- Didn't adjust this for app variants because we're copying this too many places just to make it work -->
+
 1. Add the needed entitlement for your main app in **app.config.ts**:
 
 ```json
 "entitlements": {
-  "com.apple.security.application-groups": ["group.com.expo.appjs-workflows-code"]
+  "com.apple.security.application-groups": ["group.appjs24-workflows-workshop-code"]
 }
 ```
 
@@ -282,7 +333,7 @@ Because your main app and its widget extension are technically separate apps wit
   <dict>
     <key>com.apple.security.application-groups</key>
     <array>
-      <string>group.com.expo.appjs-workflows-code</string>
+      <string>group.appjs24-workflows-workshop-code</string>
     </array>
   </dict>
 </plist>
@@ -320,7 +371,7 @@ import { Platform } from "react-native";
 // update this function
 async function getLatestShareFilePath() {
   if (Platform.OS === "ios") {
-    return await RNFS.pathForGroup("group.com.expo.appjs-workflows-code");
+    return await RNFS.pathForGroup("group.appjs24-workflows-workshop-code");
   }
   return `${RNFS.DocumentDirectoryPath}/latest_share.jpg`;
 }
@@ -348,7 +399,7 @@ struct SimpleEntry: TimelineEntry {
 3. Add this to `getTimeline()`:
 
 ```swift
-guard let groupDir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.expo.appjs-workflows-code") else {
+guard let groupDir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.group.appjs24-workflows-workshop-code") else {
   fatalError("could not get shared app group directory.")
 }
 
