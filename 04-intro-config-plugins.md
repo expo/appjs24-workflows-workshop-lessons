@@ -105,12 +105,27 @@ QuickActions.setItems<RouterAction>([
 +  {
 +    "title": "Favorites",
 +    "subtitle": "Your must-see exhibits",
-+    icon: "fav_icon,
++    icon: "fav_icon",
 +    id: "1",
 +    params: { href: "/two" },
 +  },
 ]);
 ```
+
+<details>
+  <summary>Expand to just get just the added code for easy copying</summary>
+
+  ```tsx
+{
+  "title": "Favorites",
+  "subtitle": "Your must-see exhibits",
+  icon: "fav_icon",
+  id: "1",
+  params: { href: "/two" },
+},
+  ```
+
+</details>
 
 🏃**Try it.** Build your app on your preferred platform and run it. Do you see the new action with the custom icon?
 

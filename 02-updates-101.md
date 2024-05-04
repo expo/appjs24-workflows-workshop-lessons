@@ -21,29 +21,72 @@ Let’s setup an internal testing workflow with EAS Update.
 
 # Exercises
 
-## Exercise 1. Publish an update and run it in a dev build
+## Exercise 1. Running an update in your development build
+Besides your local development environment, a development build can run any JavaScript bundle compatible with your native runtime, including one from an EAS Update. Let's make our first update and run it in your development build.
 
-We can do one more nice thing with our development build: preview updates.
-
-We need to first initialize EAS project:
-
+1. Install the EAS CLI and `expo-updates` if you have not already:
 ```bash
-npx eas init
+npm install -g eas-cli
+
+npm install expo-updates
 ```
 
-Then we can see if we can publish an update:
+2. Login to EAS with your Expo account, and initialize your project for EAS Update:
 
 ```bash
-npx eas update
+eas login
+
+eas init
+
+eas update:configure
 ```
 
-## Exercise 2. Add PR review workflow
+Now you should have the EAS Update configuration you need in your app.json.
+
+3. Rebuild your development build with `npx expo run:android` or `npx expo run:ios` to incorporate the EAS project ID.
+
+4. Publish an update:
+```bash
+eas update --branch preview
+```
+
+5. Follow the link at the bottom of the update. You'll see a QR code to run the update. You could build to a real device and scan this, or you could login to Expo on the development build on your emulator/simulator and see the update in the "Extensions" tab, but let's do this the hard way and figure out what an updates URL is made of!
+
+<!-- TODO: great place to show some pictures -->
+
+6. Grab your `projectId` from your **app.json** and the `groupId` from the update website, or from `eas update:list`, and plug them into this URL:
+```
+exp+appjs24-workflows-workshop-code://expo-development-client/?url=https://u.expo.dev/{projectId}/group/{groupId}
+```
+
+This URL opens up an update "group" (combined Android/iOS bundle) in a development build.
+
+🏃 **Try it.** Open the URL from the update in your emulator/simulator. If your development build automatically opens up in your app, use the shake gesture (android: COMMAND+M, ios: CTRL+COMMAND+Z) to go back to the app browser interface.
+
+## Exercise 2. Publish EAS Updates with your pull requests
 
 Let's set up a GitHub action that will publish a preview update and comment with a link under each pull request.
 
-Let's create a new file `.github/workflows/eas-update.yml` with content [from here](/files/02/preview.yml).
+1. Create a new branch based on your own main.
 
-🏃 **Try it.** Make a small change, create a new git branch, commit it and open a Pull Request on GitHub.
+> Make sure the branch isn't based on the upstream main (e.g., the repo you forked this from).
+
+2. Create a new file **.github/workflows/eas-update.yml** with content [from here](/files/02/preview.yml).
+
+3. Go to [https://expo.dev/accounts/keith-kurak/settings/access-tokens](https://expo.dev/accounts/keith-kurak/settings/access-tokens) and click **Create Token** to create a new access token.
+
+4. Then go to the following URL, replacing `your-username` with your actual Github username:
+```
+https://github.com/your-username/appjs24-workflows-workshop-code/settings/secrets/actions
+```
+
+5. Under **Repository secrets**, click **New repository secret**.
+
+6. Create a secret with the name `EXPO_TOKEN`, using the token from step 2.
+
+7. Publish your branch, and create a PR merging your branch into __your__ main (not into the upstream main).
+
+🏃**Try it.** Did the PR publish job run?
 
 With the workflow file in place, we should see a check like this appear under our PR:
 
@@ -53,49 +96,63 @@ And if everything went right, in a couple minutes we will see a comment like thi
 
 ![GitHub comment](/assets/02/comment.png)
 
-To test it, we just need to scan this QR code on our device that has development build installed.
-
-> Note: if until now you have used simulator, you can re-build the app for your phone using `npx run:$PLATFORM --device`, which will allow you to pick a different device.
+**OPTIONAL**: If you want to test your PR on a device, you can rebuild the app for your phone using `npx run:$PLATFORM --device`. If you'd rather run the update on your simulator, you can still use the method above for constructing the updates URI.
 
 ## Exercise 3: Use PR review workflow to add watermarks
 
 We are not done with feature development: let's add a watermark to the image. We can use the `react-native-image-marker` library for that, which we have previously preinstalled.
 
-We just need to add this part in the `crop()`:
+1. Add the watermarking step to your `crop()` function:
 
 ```ts
-const markedImage = await Marker.markText({
-  backgroundImage: {
-    src: image.path,
-    scale: 1,
-  },
-  watermarkTexts: [
-    {
-      text: "#cma",
-      position: {
-        position: Position.bottomRight,
-      },
-      style: {
-        color: "#fff",
-        fontSize: 20,
-        textBackgroundStyle: {
-          type: TextBackgroundType.none,
-          color: "#000",
-          paddingX: 16,
-          paddingY: 6,
+const markedImagePath = await Marker.markText({
+    backgroundImage: {
+      src: image.path,
+      scale: 1,
+    },
+    watermarkTexts: [
+      {
+        text: "#cma",
+        position: {
+          position: Position.bottomRight,
+        },
+        style: {
+          color: "#fff",
+          fontSize: 20,
+          textBackgroundStyle: {
+            type: TextBackgroundType.none,
+            color: "#000",
+            paddingX: 16,
+            paddingY: 6,
+          },
         },
       },
-    },
-  ],
-  quality: 100,
-  filename: image.filename,
-  saveFormat: ImageFormat.jpg,
-});
+    ],
+    quality: 100,
+    filename: image.filename,
+    saveFormat: ImageFormat.jpg,
+  });
+
+  setEditedImagePath(markedImagePath);
 ```
+
+Also, here's your imports:
+```tsx
+import Marker, { Position, TextBackgroundType, ImageFormat } from "react-native-image-marker";import Marker, { Position, TextBackgroundType, ImageFormat } from "react-native-image-marker";
+```
+
+🏃**Try it.** Does your image have a watermark now?
+
+2. Update your PR (you should see another QR code with the latest changes).
+
+3. Merge your PR back into __your__ main.
 
 # Bonus
 
 - Login to Expo within your development build and try browsing updates right there.
+- There's other formats for updates URL's. Try them out!
+
+TODO: insert updates URL formats here.
 
 ## See the solution
 

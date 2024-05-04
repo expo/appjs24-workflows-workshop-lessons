@@ -113,7 +113,15 @@ npx expo install react-native-image-marker
 
 6. This time, we need to actually build the app, so run `npx expo run:ios` or `npx expo run:android`. Eventually the app and the bundler will start after the build is complete.
 
+7. Add the **android** and **ios** folders to **.gitignore** so you don't have to check them in (we'll explain this later).
+
+```
+/ios
+/android
+```
+
 <!-- NOTE: we actually want them to set the gitignore in a later lesson -->
+<!-- NOTE to the NOTE: actually, not setting gitignore now can mess up module 2 -->
 
 ## Exercise 2(b): Cropping image (for real this time, with the development build)
 
@@ -123,14 +131,12 @@ Let's try adding that image cropping functionality again.
 
 ```tsx
 // update your import to get the type for the state variable
-import ImagePicker, {
-  Image as ImageType,
-} from "react-native-image-crop-picker";
+import ImagePicker from "react-native-image-crop-picker";
 
 // ...
 
 // Add state
-const [croppedImage, setCroppedImage] = useState<ImageType | null>(null);
+const [editedImagePath, setEditedImagePath] = useState<string | undefined>(undefined);
 
 // ...
 
@@ -142,7 +148,7 @@ async function crop() {
     height: 300,
     mediaType: "photo",
   });
-  setCroppedImage(image);
+  setEditedImagePath(image.path);
 }
 ```
 
@@ -151,18 +157,14 @@ async function crop() {
 ```diff
 <Image
 -  source={{ uri: work && work.images.web.url }}
-+  source={{ uri: croppedImage ? croppedImage.path : (work && work.images.web.url) }}
++  source={{ uri: editedImagePath ? editedImagePath : (work && work.images.web.url) }}
 ```
 
 3. Let's also change our `share()` implementation to account for the changes we made:
 
 ```ts
 async function share() {
-  if (!croppedImage) {
-    return;
-  }
-
-  await Sharing.shareAsync(croppedImage.path);
+  await Sharing.shareAsync(editedImagePath);
 }
 ```
 
@@ -172,7 +174,7 @@ async function share() {
 <RoundButton
   title="Share"
   onPress={share}
-+  disabled={!croppedImage}
++  disabled={!editedImagePath}
 />
 ```
 
