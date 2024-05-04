@@ -143,7 +143,7 @@ import Marker, { Position, TextBackgroundType, ImageFormat } from "react-native-
 
 🏃**Try it.** Does your image have a watermark now?
 
-2. Update your PR (you should see another QR code with the latest changes).
+2. Update your PR (the Github action will update your PR with a new QR code for the latest update, how cool!).
 
 3. Merge your PR back into __your__ main.
 
