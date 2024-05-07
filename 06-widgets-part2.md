@@ -214,7 +214,6 @@ registerWidgetTaskHandler(widgetTaskHandler);
 1. Update **HelloAppWidget.tsx** to conditionally show an image if one is available:
 
 ```tsx
-import React from "react";
 import {
   FlexWidget,
   TextWidget,
