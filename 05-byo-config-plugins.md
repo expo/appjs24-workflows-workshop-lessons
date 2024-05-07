@@ -212,13 +212,12 @@ The below instructions are inspired from the Android Studio wizard, but also fro
 
 (a typical widget would involve a lot of resources, we're just adding one to demonstrate the config plugin mod for editing resources)
 
-4. In **android/app/src/main/java/com/yourusernamehere/appjs24workflowsworkshopcode** add **HelloAppWidget.kt**:
+4. In **android/app/src/main/java/com/expo/appjs24workflowsworkshopcode** add **HelloAppWidget.kt**:
 
 > Make sure the package matches whatever is in your **MainActivity.kt**.
 
 ```kotlin
-// update "yourusernamehere" to match your actual project namespace
-package com.yourusernamehere.appjs24workflowsworkshopcode
+package com.expo.appjs24workflowsworkshopcode
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
