@@ -290,7 +290,7 @@ That'll handle if the widget refreshes itself or gets resized, but it will not u
 import { requestWidgetUpdate } from "react-native-android-widget";
 import { HelloAppWidget } from "@/widgets/android/HelloAppWidget";
 // ...
-async function updateWidget() {
+export async function updateWidget() {
   const latestShareBase64 = await readLatestShareAsBase64();
   requestWidgetUpdate({
     widgetName: "HelloAppWidget",
@@ -472,7 +472,7 @@ public class IosWidgetRefreshModule: Module {
 import IosWidgetRefresh from "@/modules/ios-widget-refresh";
 import { Platform } from "react-native";
 // ...
-async function updateWidget() {
+export async function updateWidget() {
   // leave android code alone
   if (Platform.OS === "ios") {
     IosWidgetRefresh.reloadWidget();
