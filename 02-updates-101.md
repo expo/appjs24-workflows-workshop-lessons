@@ -138,7 +138,7 @@ const markedImagePath = await Marker.markText({
 
 Also, here's your imports:
 ```tsx
-import Marker, { Position, TextBackgroundType, ImageFormat } from "react-native-image-marker";import Marker, { Position, TextBackgroundType, ImageFormat } from "react-native-image-marker";
+import Marker, { Position, TextBackgroundType, ImageFormat } from "react-native-image-marker";
 ```
 
 🏃**Try it.** Does your image have a watermark now?
