@@ -55,16 +55,16 @@ Let's also update the `packageName` (Android) and/or `bundleIdentifier` (iOS) to
 ```diff
 ios: {
       supportsTablet: true,
--      bundleIdentifier: "com.[username].appjs24-workflows-workshop-code",
-+      bundleIdentifier: "com.[username].appjs24-workflows-workshop-code" + IS_DEV ? "-dev" : "",
+-      bundleIdentifier: "com.expo.appjs24-workflows-workshop-code",
++      bundleIdentifier: "com.expo.appjs24-workflows-workshop-code" + IS_DEV ? "-dev" : "",
     },
     android: {
       adaptiveIcon: {
         foregroundImage: "./assets/images/adaptive-icon.png",
         backgroundColor: "#ffffff",
       },
--      package: "com.[username].appjs24workflowsworkshopcode",
-+      package: "com.[username].appjs24workflowsworkshopcode" + IS_DEV ? "dev" : "",
+-      package: "com.expo.appjs24workflowsworkshopcode",
++      package: "com.expo.appjs24workflowsworkshopcode" + IS_DEV ? "dev" : "",
     },
 ```
 
