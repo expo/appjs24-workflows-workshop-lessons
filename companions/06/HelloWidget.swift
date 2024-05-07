@@ -19,7 +19,7 @@ struct Provider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        guard let groupDir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.keithkurak.workflowsecondhalf") else {
+        guard let groupDir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.appjs24-workflows-workshop-code") else {
         fatalError("could not get shared app group directory.")
         }
 
