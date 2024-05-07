@@ -52,7 +52,7 @@ export async function saveLatestShare(fileUri: string) {
 
 export async function readLatestShareAsBase64() {
   const latestShareFilePath = getLatestShareFilePath();
-  const imageBase64 = await RNFS.readFile(latestSharePath, "base64");
+  const imageBase64 = await RNFS.readFile(latestShareFilePath, "base64");
 
   return "data:image/jpg;base64," + imageBase64;
 }
