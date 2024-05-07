@@ -40,18 +40,19 @@ We're going to write our most recent share to the app's file storage, so then th
 ```jsx
 import * as RNFS from "@dr.pogodin/react-native-fs";
 
-function getLatestShareFilePath() {
+// you'll find out why this is async later
+async function getLatestShareFilePath() {
   return `${RNFS.DocumentDirectoryPath}/latest_share.jpg`;
 }
 
 export async function saveLatestShare(fileUri: string) {
   // copy to shared location
-  const latestShareFilePath = getLatestShareFilePath();
+  const latestShareFilePath = await getLatestShareFilePath();
   await RNFS.copyFile(fileUri, latestShareFilePath);
 }
 
 export async function readLatestShareAsBase64() {
-  const latestShareFilePath = getLatestShareFilePath();
+  const latestShareFilePath = await getLatestShareFilePath();
   const imageBase64 = await RNFS.readFile(latestShareFilePath, "base64");
 
   return "data:image/jpg;base64," + imageBase64;
@@ -374,8 +375,6 @@ async function getLatestShareFilePath() {
   return `${RNFS.DocumentDirectoryPath}/latest_share.jpg`;
 }
 ```
-
-2. Make sure to update your other uses of `getLatestShareFilePath` so `await` is now in front of them.
 
 ### Exercise 4(i). Read the file from the widget
 
