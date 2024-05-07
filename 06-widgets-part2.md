@@ -150,7 +150,6 @@ config = withAndroidManifestReceiver(config, widgetName);
 4. In **widgets/android**, create **HelloAppWidget.tsx**:
 
 ```jsx
-import React from "react";
 import { FlexWidget, TextWidget } from "react-native-android-widget";
 
 export function HelloAppWidget() {
@@ -182,7 +181,6 @@ export function HelloAppWidget() {
 5. In **widgets/android**, create **widget-task-handler.tsx**:
 
 ```jsx
-import React from "react";
 import type { WidgetTaskHandlerProps } from "react-native-android-widget";
 import { HelloAppWidget } from "@/widgets/android/HelloAppWidget";
 
