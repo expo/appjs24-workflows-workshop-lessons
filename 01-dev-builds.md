@@ -40,7 +40,7 @@ We've just joined our pretend project and it's time to add our first social feat
 </Link>
 ```
 
-To space those two buttons out better, you can add `gap-x-4` to `className` of the view containing the two buttons.
+To space those two buttons out better, you can add `gap-3` to `className` of the view containing the two buttons.
 
 <!-- TODO: nice place for an image of the share button -->
 
