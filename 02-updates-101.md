@@ -73,7 +73,7 @@ Let's set up a GitHub action that will publish a preview update and comment with
 
 2. Create a new file **.github/workflows/eas-update.yml** with content [from here](/files/02/preview.yml).
 
-3. Go to [https://expo.dev/accounts/keith-kurak/settings/access-tokens](https://expo.dev/accounts/keith-kurak/settings/access-tokens) and click **Create Token** to create a new access token.
+3. Go to [https://expo.dev/accounts/[account]/settings/access-tokens](https://expo.dev/accounts/[account]/settings/access-tokens) and click **Create Token** to create a new access token.
 
 4. Then go to the following URL, replacing `your-username` with your actual Github username:
 ```
