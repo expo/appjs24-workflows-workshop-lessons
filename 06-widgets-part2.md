@@ -86,7 +86,7 @@ Android XML layouts aren't that fun to mess around with. Fortunately, you can cr
 2. Update **HelloAppWidget.kt** to inherit from the package's widget provider:
 
 ```kotlin
-package com.[username].appjs24workflowsworkshopcode // or whatever your package is named
+package com.expo.appjs24workflowsworkshopcode
 
 import com.reactnativeandroidwidget.RNWidgetProvider
 
@@ -506,7 +506,7 @@ EAS Build will automatically apply your credentials for your main app, but doesn
             "bundleIdentifier": "com.expo.appjs24-workflows-workshop",
             "targetName": "HelloWidget",
             "entitlements": {
-              "com.apple.security.application-groups": ["group.com.expo.com.expo.appjs24-workflows-workshop"]
+              "com.apple.security.application-groups": ["group.appjs24-workflows-workshop"]
             }
           }
         ]
