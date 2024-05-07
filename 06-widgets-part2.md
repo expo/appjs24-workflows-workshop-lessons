@@ -378,11 +378,12 @@ async function getLatestShareFilePath() {
 
 ### Exercise 4(i). Read the file from the widget
 
-TODO: update with image code, I only did this with text before
-
 Now that we're saving the file to the group path, let's read the same file from the widget. Let's make some updates to **HelloWidget.swift**.
 
-1. Update `SimpleEntry` in **HelloWidget.swift** to include image data:
+1. Update the **HelloWidget.swift** to display the image. You can copy over the [new HelloWidget.swift](/companions/06/HelloWidget.swift).
+
+#### What are we doing here?
+This isn't really a SwiftUI workshop, so we're not going into too many details. But, in brief, we are updating the data structure to support image data:
 
 ```swift
 struct SimpleEntry: TimelineEntry {
@@ -391,12 +392,10 @@ struct SimpleEntry: TimelineEntry {
 }
 ```
 
-2. Update the **HelloWidget.swift** to display the image. You can copy over the [new HelloWidget.swift](/companions/06/HelloWidget.swift).
-
-3. Add this to `getTimeline()`:
+And we're updating the timeline function to read the image data from the share filed
 
 ```swift
-guard let groupDir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.group.appjs24-workflows-workshop-code") else {
+guard let groupDir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.appjs24-workflows-workshop-code") else {
   fatalError("could not get shared app group directory.")
 }
 
