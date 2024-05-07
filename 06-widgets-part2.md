@@ -65,7 +65,7 @@ async function updateWidget() {
 3. Right before calling `shareAsync`, call your new library:
 
 ```tsx
-import { saveLatestShare } from "@/widgets/common/widget-share";
+import { saveLatestShare, updateWidget } from "@/widgets/common/widget-share";
 
 // Later...
 async function share() {
