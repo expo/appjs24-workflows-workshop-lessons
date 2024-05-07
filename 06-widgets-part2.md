@@ -35,7 +35,7 @@ We're going to write our most recent share to the app's file storage, so then th
 
 <!-- TODO: figure out what we actually need once demo app is ready -->
 
-2. Let's make a little file access library that we'll use across our app. In **widgets/common**, add **widget-share.ts**:
+2. Let's make a little file access library that we'll use across our app. In **widgets/common**, add **widget-share.tsx**:
 
 ```jsx
 import * as RNFS from "@dr.pogodin/react-native-fs";
@@ -284,17 +284,18 @@ props.renderWidget(
 
 That'll handle if the widget refreshes itself or gets resized, but it will not update the widget instantly if a new image is shared. We'll need to request an update to do that.
 
-2. In **widget-share.ts**, fill in the `updateWidget()` function:
+2. In **widget-share.tsx**, fill in the `updateWidget()` function:
 
 ```tsx
 import { requestWidgetUpdate } from "react-native-android-widget";
+import { HelloAppWidget } from "@/widgets/android/HelloAppWidget";
 // ...
 async function updateWidget() {
   const latestShareBase64 = await readLatestShareAsBase64();
   requestWidgetUpdate({
     widgetName: "HelloAppWidget",
     renderWidget: (props) => (
-      <HelloAppWidget image={latestShareBase64} widgetInfo={props} />
+      <HelloAppWidget imageBase64={latestShareBase64} widgetInfo={props} />
     ),
     widgetNotFound: () => {
       // Called if no widget is present on the home screen
@@ -465,7 +466,7 @@ public class IosWidgetRefreshModule: Module {
 
 5. Remove the `android` entry from **expo-module.config.json**.
 
-6. In **widget-share.ts**, let's add (or update if it's already there) the `updateWidget()` function:
+6. In **widget-share.tsx**, let's add (or update if it's already there) the `updateWidget()` function:
 
 ```tsx
 import IosWidgetRefresh from "@/modules/ios-widget-refresh";
