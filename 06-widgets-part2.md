@@ -57,7 +57,7 @@ export async function readLatestShareAsBase64() {
   return "data:image/jpg;base64," + imageBase64;
 }
 
-async function updateWidget() {
+export async function updateWidget() {
   // TODO
 }
 ```
