@@ -380,7 +380,7 @@ async function getLatestShareFilePath() {
 
 Now that we're saving the file to the group path, let's read the same file from the widget. Let's make some updates to **HelloWidget.swift**.
 
-1. Update the **HelloWidget.swift** to display the image. You can copy over the [new HelloWidget.swift](/companions/06/HelloWidget.swift).
+1. Update the **HelloWidget.swift** to display the image. You can copy over the [new HelloWidget.swift](/files/06/HelloWidget.swift).
 
 #### What are we doing here?
 This isn't really a SwiftUI workshop, so we're not going into too many details. But, in brief, we are updating the data structure to support image data:
@@ -463,6 +463,8 @@ public class IosWidgetRefreshModule: Module {
 ```
 
 5. Remove the `android` entry from **expo-module.config.json**.
+
+> If you're not sure if you made all these changes, you can copy the [local module folder over to your project](/files/06/modules).
 
 6. In **widget-share.tsx**, let's add (or update if it's already there) the `updateWidget()` function:
 
