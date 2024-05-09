@@ -56,7 +56,7 @@ Let's also update the `packageName` (Android) and/or `bundleIdentifier` (iOS) to
 ios: {
       supportsTablet: true,
 -      bundleIdentifier: "com.expo.appjs24-workflows-workshop-code",
-+      bundleIdentifier: "com.expo.appjs24-workflows-workshop-code" + IS_DEV ? "-dev" : "",
++      bundleIdentifier: "com.expo.appjs24-workflows-workshop-code" + (IS_DEV ? "-dev" : ""),
     },
     android: {
       adaptiveIcon: {
@@ -64,7 +64,7 @@ ios: {
         backgroundColor: "#ffffff",
       },
 -      package: "com.expo.appjs24workflowsworkshopcode",
-+      package: "com.expo.appjs24workflowsworkshopcode" + IS_DEV ? "dev" : "",
++      package: "com.expo.appjs24workflowsworkshopcode" + (IS_DEV ? "dev" : ""),
     },
 ```
 
@@ -115,8 +115,6 @@ How you check and prompt for updates in your app is up to you, but a nice lightw
 
 ```diff
 export default function VisitScreen() {
-  const { isLarge } = useMediaQuery();
-
 +   const updateInfo = Updates.useUpdates();
 +
 +   useEffect(() => {
@@ -167,6 +165,12 @@ return (
     {/* ... */}
   </View>
 );
+```
+
+Also, there are some imports to add:
+```tsx
+import * as Updates from "expo-updates";
+import * as Application from "expo-application";
 ```
 
 🏃**Try it.** You should see the version info, though updates do not run in development mode, so you will not see the Update ID.

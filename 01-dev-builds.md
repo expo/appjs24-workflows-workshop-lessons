@@ -168,7 +168,7 @@ async function share() {
 }
 ```
 
-4. Disable the Share button to complete the effect:
+4. Disable the Share button in **share.tsx** to complete the effect:
 
 ```diff
 <RoundButton
