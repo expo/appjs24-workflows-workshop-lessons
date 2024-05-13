@@ -31,7 +31,7 @@ Let’s setup an EAS Build workflow that can install our development and product
 
 ### FYI: Gitignoring native projects
 
-Remember how we added the **android** and **ios** native projects to **.gitignore**? We did that just for convenience before, so you didn't have to push a lot of files and risk a messy merge. But, now it really matters! We're going to be regenerating native projects in ways that can be quite different from run to run. Therefore, it's important to start fresh. Gitignoring your natiive projects tells EAS Build to generate a fresh copy each time from its template, your **package.json**, **app.json**, etc.
+Remember how we added the **android** and **ios** native projects to **.gitignore**? We did that just for convenience before, so you didn't have to push a lot of files and risk a messy merge. But, now it really matters! We're going to be regenerating native projects in ways that can be quite different from run to run. Therefore, it's important to start fresh. Gitignoring your native projects tells EAS Build to generate a fresh copy each time from its template, your **package.json**, **app.json**, etc.
 
 ### Dynamic config
 
