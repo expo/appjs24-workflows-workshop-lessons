@@ -102,6 +102,10 @@ import 'ts-node/register';
 import { ExpoConfig } from 'expo/config';
 
 module.exports = ({ config } : { config: ExpoConfig }) => {
+  return {
+     // put your config here
+  }
+}
   ```
 
 </details>
@@ -335,7 +339,7 @@ In the instructions below, we're going to focus on the raw code you'll be editin
 
 ### iOS
 
-[Follow the instructions here for creating an iOS plugin](/companions/05/io-plugin.md).
+[Follow the instructions here for creating an iOS plugin](/companions/05/ios-plugin.md).
 
 ## Exercise 5: Clean up
 
