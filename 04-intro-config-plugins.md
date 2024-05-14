@@ -30,7 +30,7 @@ Let’s learn how config plugins modify native projects and let us tap into spec
 
 1. Run `npx @expo/fingerprint@latest ./ > fingerprint.json` to generate your first fingerprint.
 2. Run `npm install expo-quick-actions` to install the module.
-3. Run `npx @expo/fingerprint@latest fingerprint.json` to compare your project with your last fingerprint. Did it change?
+3. Run `npx @expo/fingerprint@latest ./ fingerprint.json` to compare your project with your last fingerprint. Did it change?
 4. Run `npx @expo/fingerprint@latest ./ > fingerprint.json` again and commit the file to save your newest fingerprint.
 
 ### Basic expo-quick-actions implementation
