@@ -48,6 +48,10 @@ async function getLatestShareFilePath() {
 export async function saveLatestShare(fileUri: string) {
   // copy to shared location
   const latestShareFilePath = await getLatestShareFilePath();
+  // iOS can't just copy over the file :-/
+  if (await RNFS.exists(latestShareFilePath)) {
+    await RNFS.unlink(latestShareFilePath);
+  }
   await RNFS.copyFile(fileUri, latestShareFilePath);
 }
 
