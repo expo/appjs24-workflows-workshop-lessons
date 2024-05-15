@@ -20,6 +20,16 @@ Let’s learn how config plugins modify native projects and let us tap into spec
 
 # Exercises
 
+## Exercise 0. Backtracking a bit on app variants
+
+We like that we have app variants now (from module 03), but... we're going to be doing a lot of different _development_ activities, and we always want to work in our _development_ context for the next few hours. To ensure you are always using your development config (whether you're running `prebuild`, building the app from the CLI or IDE, etc., set an environment variable to pin you to the development variant in your terminal:
+
+```
+export APP_VARIANT="development"
+```
+
+You can later reverse this with `unset APP_VARIANT`.
+
 ## Exercise 1. Expo Modules and Fingerprint
 
 > Just pick one platform of your choice (iOS or Android) for this step
