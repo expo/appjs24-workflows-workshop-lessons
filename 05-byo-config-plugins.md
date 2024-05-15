@@ -121,6 +121,8 @@ plugins: [
 
 🏃**Try it.** Run `npx expo prebuild --clean --no-install`. Do you see your console logs?
 
+> **SUPER IMPORTANT**: Now that you've run prebuild, this is a really good time to check your package name (Android) and/or bundle identifier (iOS) inside your native project folder. This will be in **app/build.gradle** on Android and **Info.plist** on iOS. If it looks like what is set in your App config, that's great. If it looks...strange, or like it's missing something, let's talk (this can really mess up iOS especially).
+
 ## Exercise 2. Choose Your Own Widget Adventure
 
 You will now implement the config plugin that sets up a widget for either an iOS or an Android app- your choice. If you finish one of the platforms, you can come back to the other. You might not get to both platforms, and that's OK. Either one will teach you a lot about constructing config plugins.
@@ -137,6 +139,8 @@ For each platform, you will do the following:
 Once you've chosen your platform, proceed to the next exercises, ignoring the steps specific to the platform you're not working on.
 
 ## Exercise 3. Add a Hello World widget to your app manually
+
+> **IMPORTANT** Config plugins are scripts that automate task that the mobile development tool vendors tell us developers to do manually. So, it's really important to understand how to do the configuration manually before you try to automate it. Be sure everything works after you create the widget manually before you proceed with making the config plugin.
 
 ### Setup your working branch
 
