@@ -123,8 +123,6 @@ plugins: [
 
 > **SUPER IMPORTANT**: Now that you've run prebuild, this is a really good time to check your package name (Android) and/or bundle identifier (iOS) inside your native project folder. This will be in **app/build.gradle** on Android and **Info.plist** on iOS. If it looks like what is set in your App config, that's great. If it looks...strange, or like it's missing something, let's talk (this can really mess up iOS especially).
 
-TODO: we should add what to look for
-
 ## Exercise 2. Choose Your Own Widget Adventure
 
 You will now implement the config plugin that sets up a widget for either an iOS or an Android app – your choice. If you finish one of the platforms, you can come back to the other. You might not get to both platforms, and that's OK. Either one will teach you a lot about constructing config plugins.
