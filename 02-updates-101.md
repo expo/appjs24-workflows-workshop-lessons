@@ -133,7 +133,7 @@ const markedImagePath = await Marker.markText({
     saveFormat: ImageFormat.jpg,
   });
 
-  setEditedImagePath(markedImagePath);
+  setEditedImagePath(normalizeFilePath(markedImagePath));
 ```
 
 Also, here's your imports:
