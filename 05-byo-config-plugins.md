@@ -6,7 +6,7 @@ Let’s learn how config plugins modify native projects and let us tap into spec
 
 ### Concepts
 
-- Establish a good foundation for working with native features by walking through their configuration just like how any native develope would do it.
+- Establish a good foundation for working with native features by walking through their configuration just like how any native developer would do it.
 - Config plugins are just doing automatically what native guides tell you to do manually.
 
 ### Tasks
@@ -97,16 +97,16 @@ export default withWidget;
 <details>
   <summary>Expand to just get just the added code for easy copying</summary>
 
-  ```ts
-import 'ts-node/register';
-import { ExpoConfig } from 'expo/config';
+```ts
+import "ts-node/register";
+import { ExpoConfig } from "expo/config";
 
-module.exports = ({ config } : { config: ExpoConfig }) => {
+module.exports = ({ config }: { config: ExpoConfig }) => {
   return {
-     // put your config here
-  }
-}
-  ```
+    // put your config here
+  };
+};
+```
 
 </details>
 

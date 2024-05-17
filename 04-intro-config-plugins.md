@@ -84,23 +84,23 @@ import { useQuickActionRouting, RouterAction } from "expo-quick-actions/router";
 <!-- TODO: create these files -->
 2. In **app.config.js**, add `expo-quick-action`'s associated config plugin. Update the paths as needed:
 
-```json
-"plugins": [
+```js
+plugins: [
   [
-     "expo-quick-actions",
-     {
-       "androidIcons": {
-          "fav_icon": {
-            "foregroundImage": "./assets/images/adaptive-icon-fav.png",
-            "backgroundColor": "#29cfc1"
-          }
+    "expo-quick-actions",
+    {
+      androidIcons: {
+        fav_icon: {
+          foregroundImage: "./assets/images/adaptive-icon-fav.png",
+          backgroundColor: "#29cfc1",
         },
-        "iosIcons": {
-          "fav_icon": "./assets/images/fav.png",
-        }
-      }
-   ]
-]
+      },
+      iosIcons: {
+        fav_icon: "./assets/images/fav.png",
+      },
+    },
+  ],
+],
 ```
 
 3. Add a new quick action in root **\_layout.tsx** that uses your icon and goes to the favorites tab:
