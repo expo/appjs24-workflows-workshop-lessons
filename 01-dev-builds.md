@@ -133,6 +133,14 @@ Let's try adding that image cropping functionality again.
 // update your import to get the type for the state variable
 import ImagePicker from "react-native-image-crop-picker";
 
+// there's some file path weirdness later on, let's get ahead of it now!
+function normalizeFilePath(path: string) {
+  if (Platform.OS === "android") {
+    return `file://${path}`;
+  }
+  return path;
+}
+
 // ...
 
 // Add state
@@ -148,9 +156,11 @@ async function crop() {
     height: 300,
     mediaType: "photo",
   });
-  setEditedImagePath(image.path);
+  setEditedImagePath(normalizeFilePath(image.path));
 }
 ```
+
+(also import `Platform` from `react-native`)
 
 2. Update the image URI to switch between the original image and the cropped version:
 
