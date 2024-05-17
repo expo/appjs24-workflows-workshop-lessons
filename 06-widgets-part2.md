@@ -102,10 +102,7 @@ class HelloAppWidget : RNWidgetProvider() {
 3. Update the config plugin to add the service in **AndroidManifest.xml**. Add this function to **plugins/withAndroidWidget.ts**:
 
 ```ts
-function withAndroidManifestReceiver(
-  config: ExpoConfig,
-  widgetName: string
-) {
+function withAndroidManifestReceiver(config: ExpoConfig, widgetName: string) {
   return withAndroidManifest(config, async (androidManifestConfig) => {
     const mainApplication = AndroidConfig.Manifest.getMainApplicationOrThrow(
       androidManifestConfig.modResults
@@ -150,7 +147,6 @@ Then call it right before returning the config in `withAndroidWidget()`:
 ```ts
 config = withAndroidManifestReceiver(config, widgetName);
 ```
-
 
 4. In **widgets/android**, create **HelloAppWidget.tsx**:
 
@@ -387,6 +383,7 @@ Now that we're saving the file to the group path, let's read the same file from 
 1. Update the **HelloWidget.swift** to display the image. You can copy over the [new HelloWidget.swift](/files/06/HelloWidget.swift).
 
 #### What are we doing here?
+
 This isn't really a SwiftUI workshop, so we're not going into too many details. But, in brief, we are updating the data structure to support image data:
 
 ```swift
@@ -488,7 +485,7 @@ export async function updateWidget() {
 
 ## See the solution
 
-Switch to branch: `05-widgets-part2-solution`
+Switch to branch: `06-widgets-part2-solution`
 
 ## Notes about building signed versions for iOS
 

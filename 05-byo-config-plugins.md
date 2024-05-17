@@ -89,7 +89,7 @@ export default withWidget;
 ```diff
 +import 'ts-node/register';
 +import { ExpoConfig } from 'expo/config';
-- module.exports = ({ config }) => {
+- export default {
 +module.exports = ({ config } : { config: ExpoConfig }) => {
   return {
 ```
@@ -123,9 +123,11 @@ plugins: [
 
 > **SUPER IMPORTANT**: Now that you've run prebuild, this is a really good time to check your package name (Android) and/or bundle identifier (iOS) inside your native project folder. This will be in **app/build.gradle** on Android and **Info.plist** on iOS. If it looks like what is set in your App config, that's great. If it looks...strange, or like it's missing something, let's talk (this can really mess up iOS especially).
 
+TODO: we should add what to look for
+
 ## Exercise 2. Choose Your Own Widget Adventure
 
-You will now implement the config plugin that sets up a widget for either an iOS or an Android app- your choice. If you finish one of the platforms, you can come back to the other. You might not get to both platforms, and that's OK. Either one will teach you a lot about constructing config plugins.
+You will now implement the config plugin that sets up a widget for either an iOS or an Android app – your choice. If you finish one of the platforms, you can come back to the other. You might not get to both platforms, and that's OK. Either one will teach you a lot about constructing config plugins.
 
 **Android** - A good variety of editing configurations and adding resource files. Other than file copies, this is all using established mods. A good all-around choice that isn't too difficult and exposes you to a variety of things.
 
@@ -165,9 +167,9 @@ The below instructions are inspired from the Android Studio wizard, but also fro
 - [Android Documentation - creating a simple widget](https://developer.android.com/develop/ui/views/appwidgets)
 - [Creating an Android Widget with Jetpack Compose / Glance](https://developer.android.com/develop/ui/compose/glance/create-app-widget)
 
-#### Creating a Hello World Widget
+#### Creating a Hello World Android Widget
 
-1. In **android/app/src/main/res/xml** (create this folder if it doesn't exist), add **hello_app_widget_info.xml**:
+1. In **android/app/src/main/res/xml** (you might need to create **xml** folder), add **hello_app_widget_info.xml**:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -187,7 +189,7 @@ The below instructions are inspired from the Android Studio wizard, but also fro
 
 (this defines the widget)
 
-2. In **android/app/src/main/res/layout** (create the folder if it doesn't exist), add **hello_app_widget.xml**:
+2. In **android/app/src/main/res/layout** (you might need to create **layout** folder), add **hello_app_widget.xml**:
 
 ```xml
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

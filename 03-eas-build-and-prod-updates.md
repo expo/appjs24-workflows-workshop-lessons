@@ -107,6 +107,7 @@ Update `scripts` in **package.json** to add this variable when they're used:
 Now you can run `npm run android` or `npm run ios` to get the exact same build.
 
 ## Exercise 3: Checking for updates
+
 We are ramping up to the point where we publish updates in production. Normally, an update starts downloading after an app cold start, and then is applied on the next cold start after that. However, we can make this faster with the `expo-updates` JS API for update checking and downloading on-demand.
 
 How you check and prompt for updates in your app is up to you, but a nice lightweight way to sneak this API into your app is to take an existing "About" page, add some version info, and indicate near that info if an update is available, and provide a reload button. Let's do that with the **Visit** screen.
@@ -168,6 +169,7 @@ return (
 ```
 
 Also, there are some imports to add:
+
 ```tsx
 import * as Updates from "expo-updates";
 import * as Application from "expo-application";

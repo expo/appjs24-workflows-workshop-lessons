@@ -144,7 +144,9 @@ function normalizeFilePath(path: string) {
 // ...
 
 // Add state
-const [editedImagePath, setEditedImagePath] = useState<string | undefined>(undefined);
+const [editedImagePath, setEditedImagePath] = useState<string | undefined>(
+  undefined
+);
 
 // ...
 

@@ -22,9 +22,11 @@ Let’s setup an internal testing workflow with EAS Update.
 # Exercises
 
 ## Exercise 1. Running an update in your development build
+
 Besides your local development environment, a development build can run any JavaScript bundle compatible with your native runtime, including one from an EAS Update. Let's make our first update and run it in your development build.
 
 1. Install the EAS CLI and `expo-updates` if you have not already:
+
 ```bash
 npm install -g eas-cli
 
@@ -46,6 +48,7 @@ Now you should have the EAS Update configuration you need in your app.json.
 3. Rebuild your development build with `npx expo run:android` or `npx expo run:ios` to incorporate the EAS project ID.
 
 4. Publish an update:
+
 ```bash
 eas update --branch preview
 ```
@@ -55,6 +58,7 @@ eas update --branch preview
 <!-- TODO: great place to show some pictures -->
 
 6. Grab your `projectId` from your **app.json** and the `groupId` from the update website, or from `eas update:list`, and plug them into this URL:
+
 ```
 exp+appjs24-workflows-workshop-code://expo-development-client/?url=https://u.expo.dev/{projectId}/group/{groupId}
 ```
@@ -76,6 +80,7 @@ Let's set up a GitHub action that will publish a preview update and comment with
 3. Go to [https://expo.dev/accounts/[account]/settings/access-tokens](https://expo.dev/accounts/[account]/settings/access-tokens) and click **Create Token** to create a new access token.
 
 4. Then go to the following URL, replacing `your-username` with your actual Github username:
+
 ```
 https://github.com/your-username/appjs24-workflows-workshop-code/settings/secrets/actions
 ```
@@ -84,7 +89,7 @@ https://github.com/your-username/appjs24-workflows-workshop-code/settings/secret
 
 6. Create a secret with the name `EXPO_TOKEN`, using the token from step 2.
 
-7. Publish your branch, and create a PR merging your branch into __your__ main (not into the upstream main).
+7. Publish your branch, and create a PR merging your branch into **your** main (not into the upstream main).
 
 🏃**Try it.** Did the PR publish job run?
 
@@ -106,46 +111,51 @@ We are not done with feature development: let's add a watermark to the image. We
 
 ```ts
 const markedImagePath = await Marker.markText({
-    backgroundImage: {
-      src: image.path,
-      scale: 1,
-    },
-    watermarkTexts: [
-      {
-        text: "#cma",
-        position: {
-          position: Position.bottomRight,
-        },
-        style: {
-          color: "#fff",
-          fontSize: 20,
-          textBackgroundStyle: {
-            type: TextBackgroundType.none,
-            color: "#000",
-            paddingX: 16,
-            paddingY: 6,
-          },
+  backgroundImage: {
+    src: image.path,
+    scale: 1,
+  },
+  watermarkTexts: [
+    {
+      text: "#cma",
+      position: {
+        position: Position.bottomRight,
+      },
+      style: {
+        color: "#fff",
+        fontSize: 20,
+        textBackgroundStyle: {
+          type: TextBackgroundType.none,
+          color: "#000",
+          paddingX: 16,
+          paddingY: 6,
         },
       },
-    ],
-    quality: 100,
-    filename: image.filename,
-    saveFormat: ImageFormat.jpg,
-  });
+    },
+  ],
+  quality: 100,
+  filename: image.filename,
+  saveFormat: ImageFormat.jpg,
+});
 
-  setEditedImagePath(normalizeFilePath(markedImagePath));
+setEditedImagePath(normalizeFilePath(markedImagePath));
 ```
 
 Also, here's your imports:
+
 ```tsx
-import Marker, { Position, TextBackgroundType, ImageFormat } from "react-native-image-marker";
+import Marker, {
+  Position,
+  TextBackgroundType,
+  ImageFormat,
+} from "react-native-image-marker";
 ```
 
 🏃**Try it.** Does your image have a watermark now?
 
 2. Update your PR (the Github action will update your PR with a new QR code for the latest update, how cool!).
 
-3. Merge your PR back into __your__ main.
+3. Merge your PR back into **your** main.
 
 # Bonus
 
