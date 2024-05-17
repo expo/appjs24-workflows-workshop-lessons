@@ -135,7 +135,7 @@ import ImagePicker from "react-native-image-crop-picker";
 
 // there's some file path weirdness later on, let's get ahead of it now!
 function normalizeFilePath(path: string) {
-  if (Platform.OS === "android") {
+  if (Platform.OS === "android" && !path.startsWith("file://") {
     return `file://${path}`;
   }
   return path;
