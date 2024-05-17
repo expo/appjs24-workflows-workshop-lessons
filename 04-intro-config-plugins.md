@@ -6,12 +6,12 @@ Let’s learn how config plugins modify native projects and let us tap into spec
 
 ### Concepts
 
-- How config plugins work with CNG to replace “manually update AndroidManifest.xml, entitlements, MainActivity, etc.” steps that are common when tapping into native capabilities that require more than just code.
+- How config plugins work with CNG to replace “manually update **AndroidManifest.xml**, entitlements, MainActivity, etc.” steps that are common when tapping into native capabilities that require more than just code.
 - Meanwhile, Expo Modules API is a way to wrap native code and access it via JS. Modules are also integrated with CNG, but with autolinking.
 
 ### Tasks
 
-- Add expo-quick-actions, setting a custom image in your quick action menu that works on iOS and Android
+- Add `expo-quick-actions`, setting a custom image in your quick action menu that works on iOS and Android
 - Take a fingerprint at each step of the way to see how your native runtime changes.
 
 ### Resources
@@ -24,7 +24,7 @@ Let’s learn how config plugins modify native projects and let us tap into spec
 
 We like that we have app variants now (from module 03), but... we're going to be doing a lot of different _development_ activities, and we always want to work in our _development_ context for the next few hours. To ensure you are always using your development config (whether you're running `prebuild`, building the app from the CLI or IDE, etc., set an environment variable to pin you to the development variant in your terminal:
 
-```
+```bash
 export APP_VARIANT="development"
 ```
 
@@ -38,6 +38,8 @@ You can later reverse this with `unset APP_VARIANT`.
 
 > Use `npm install` this time to avoid auto-configuring the `expo-quick-actions` config plugin so we can see the changes to the fingerprint.
 
+> Let's do a dry run of the fingerprint command first to get it installed: `npx @expo/fingerprint@latest`. This will error and that's what we want - it means it installed correctly.
+
 1. Run `npx @expo/fingerprint@latest ./ > fingerprint.json` to generate your first fingerprint.
 2. Run `npm install expo-quick-actions` to install the module.
 3. Run `npx @expo/fingerprint@latest ./ fingerprint.json` to compare your project with your last fingerprint. Did it change?
@@ -50,7 +52,7 @@ You can later reverse this with `unset APP_VARIANT`.
 ```tsx
 useQuickActionRouting();
 
-React.useEffect(() => {
+useEffect(() => {
   QuickActions.setItems<RouterAction>([
     {
       title: "Visit the museum",
@@ -63,7 +65,7 @@ React.useEffect(() => {
 }, []);
 ```
 
-Add these imports (as well as `Platform` and `React` if they're not already there):
+Add these imports (as well as `Platform` to `react-native` if it isn't there yet):
 
 ```tsx
 import * as QuickActions from "expo-quick-actions";
@@ -125,15 +127,15 @@ QuickActions.setItems<RouterAction>([
 <details>
   <summary>Expand to just get just the added code for easy copying</summary>
 
-  ```tsx
+```tsx
 {
-  "title": "Favorites",
-  "subtitle": "Your must-see exhibits",
-  icon: "fav_icon",
-  id: "1",
-  params: { href: "/two" },
+"title": "Favorites",
+"subtitle": "Your must-see exhibits",
+icon: "fav_icon",
+id: "1",
+params: { href: "/two" },
 },
-  ```
+```
 
 </details>
 
