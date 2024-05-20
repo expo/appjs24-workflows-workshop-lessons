@@ -15,7 +15,7 @@ A Mac with Xcode and Android development tools is highly recommended. If you do 
 
 ## Installation/ setup steps
 
-(adapted from https://docs.expo.dev/get-started/installation/)
+(adapted from https://docs.expo.dev/get-started/create-a-project/)
 Bring your laptop! You will write code with it. If you regularly do JavaScript development, you likely have many of these installed on your machine already.
 
 ### Install Expo prerequisites
