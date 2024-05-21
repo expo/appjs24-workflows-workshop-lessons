@@ -18,7 +18,7 @@ Transition from Expo Go to a Development Build so we can keep the same fast deve
 
 ### Resources
 
-- Link to any helpful docs
+- [Development builds](https://docs.expo.dev/develop/development-builds/use-development-builds/)
 
 # Exercises
 
