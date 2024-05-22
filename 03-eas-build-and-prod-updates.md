@@ -136,6 +136,24 @@ export default function VisitScreen() {
 +   }, []);
 ```
 
+<details>
+  <summary>Expand to just get just the added code for easy copying</summary>
+
+```ts
+const updateInfo = Updates.useUpdates();
+
+   useEffect(() => {
+     (async function runAsync() {
+       const status = await Updates.checkForUpdateAsync();
+       if (status.isAvailable) {
+         await Updates.fetchUpdateAsync();
+       }
+     })();
+   }, []);
+```
+
+</details>
+
 2. And then we have to display it:
 
 ```tsx
