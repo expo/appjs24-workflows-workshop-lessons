@@ -7,3 +7,7 @@ https://stackoverflow.com/questions/76423227/fixing-npx-script-execution-error-r
 ## White label example
 
 https://github.com/keith-kurak/expo-white-label-demo
+
+## Pillar Valley (good example of quick actions and iOS widgets)
+
+https://github.com/EvanBacon/pillar-valley
