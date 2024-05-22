@@ -8,6 +8,10 @@ https://stackoverflow.com/questions/76423227/fixing-npx-script-execution-error-r
 
 https://github.com/keith-kurak/expo-white-label-demo
 
+## Blog about adding an apple widget to an app with `expo-apple-targets`
+
+https://evanbacon.dev/blog/apple-home-screen-widgets
+
 ## Pillar Valley (good example of quick actions and iOS widgets)
 
 https://github.com/EvanBacon/pillar-valley
