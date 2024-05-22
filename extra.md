@@ -11,3 +11,7 @@ https://github.com/keith-kurak/expo-white-label-demo
 ## Pillar Valley (good example of quick actions and iOS widgets)
 
 https://github.com/EvanBacon/pillar-valley
+
+## slides
+
+https://docs.google.com/presentation/d/1XzlP3D6DI9Sg17W2cKq9auQcxslxilvIPdCR2IwyFF4/edit?usp=sharing
