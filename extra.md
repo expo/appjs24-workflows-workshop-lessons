@@ -18,5 +18,6 @@ https://docs.google.com/presentation/d/1XzlP3D6DI9Sg17W2cKq9auQcxslxilvIPdCR2Iwy
 
 ## Expo modules API tutorials
 
-[Create a native view](https://docs.expo.dev/modules/native-view-tutorial/)
-[Use native imperative API](https://docs.expo.dev/modules/native-module-tutorial/)
+- [Create a native view](https://docs.expo.dev/modules/native-view-tutorial/)
+- [Use native imperative API](https://docs.expo.dev/modules/native-module-tutorial/)
+- [Wrap a third party library](https://docs.expo.dev/modules/third-party-library/)
