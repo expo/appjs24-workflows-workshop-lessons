@@ -370,7 +370,7 @@ import { Platform } from "react-native";
 // update this function
 async function getLatestShareFilePath() {
   if (Platform.OS === "ios") {
-    return await RNFS.pathForGroup("group.appjs24-workflows-workshop-code");
+    return await RNFS.pathForGroup("group.appjs24-workflows-workshop-code") + "/latest_share.jpg";
   }
   return `${RNFS.DocumentDirectoryPath}/latest_share.jpg`;
 }
