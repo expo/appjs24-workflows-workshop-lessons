@@ -21,7 +21,7 @@ Let’s expand on our widget to make something more realistic that actually shar
 
 ### Resources
 
-- Link to any helpful docs.
+- [Apple Widgets + Expo](https://evanbacon.dev/blog/apple-home-screen-widgets)
 
 # Exercises
 
