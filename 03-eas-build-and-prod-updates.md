@@ -83,6 +83,14 @@ We should also update `eas.json` file to use the `APP_VARIANT` environment varia
 
 1. Run `eas build --profile development --platform android --local` (or use `--platform ios` instead) to generate a local build.
 
+**NOTE** Update your eas.json profiles to use a simulator build. Add this to the `development` and `production` profiles (since we're just pretending to deploy to prod):
+
+```
+"ios": {
+        "simulator": true
+      }
+```
+
 **TIP**: You can use [Orbit](https://expo.dev/orbit), our tool for running builds on simulators and devices.
 
 ![Orbit](/assets/03/orbit.png)
